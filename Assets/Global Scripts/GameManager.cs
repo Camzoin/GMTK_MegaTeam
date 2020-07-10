@@ -7,9 +7,13 @@ public class GameManager : MonoBehaviour
 {
 	private static GameManager instance = null;
 
+	private GameObject pauseMenu;
+	private bool isPause = false;
+
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
 	private Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
 	{
+		//Menu Scene: 0
 		{ games.LIMBO, 1 },
 		{ games.HIDEBRIDGE, 2 },
 		{ games.JUMPKING, 3 },
@@ -22,19 +26,19 @@ public class GameManager : MonoBehaviour
 		{ games.TARGETS, 10 },
 		{ games.TANGLE, 11 },
 		{ games.TREADMILL, 12 },
-		{ games.WELL, 13},
-		{ games.CARDFLIP, 14},
-		{ games.UNDERTREE, 15},
-		{ games.MAHJONG, 16},
-		{ games.PACMAN, 17},
-		{ games.COOKIE, 18},
-		{ games.SPOTLIGHT, 19},
-		{ games.TYPERACE, 20},
-		{ games.SUMO, 21},
-		{ games.OSU, 22},
-		{ games.TOILET, 23},
-		{ games.WHACKAMOLE, 24},
-		{ games.SIMPLE, 25}
+		{ games.WELL, 13 },
+		{ games.CARDFLIP, 14 },
+		{ games.UNDERTREE, 15 },
+		{ games.MAHJONG, 16 },
+		{ games.PACMAN, 17 },
+		{ games.COOKIE, 18 },
+		{ games.SPOTLIGHT, 19 },
+		{ games.TYPERACE, 20 },
+		{ games.SUMO, 21 },
+		{ games.OSU, 22 },
+		{ games.TOILET, 23 },
+		{ games.WHACKAMOLE, 24 },
+		{ games.SIMPLE, 25 }
 	};
 
 	private games currentGame;
@@ -44,7 +48,6 @@ public class GameManager : MonoBehaviour
 
 	public static float sessionLength;
 	private float startTime;
-
 
 	private void Awake()
 	{
@@ -67,6 +70,9 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		pauseMenu = gameObject.transform.GetChild(0).gameObject;
+		pauseMenu.SetActive(false);
+
 		//GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 		//gm.ScorePoints(GameManager.games.WhackAMole, 1f);
 
@@ -81,10 +87,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
 		if (Time.time > startTime + sessionLength)
 		{
 			//end the game / go to a summary screen and submit score to leader board
+		}
+
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (!isPause)
+			{
+				//Pause Menu Needs:
+				//Abandon Run - Back to menu
+				//Exit - Close Game
+				//Volume - Mute/Unmute & Slider
+				//Display Score
+				isPause = true;
+				pauseMenu.SetActive(true);
+
+			}
+			else
+			{
+				isPause = false;
+				pauseMenu.SetActive(false);
+			}
 		}
 
     }

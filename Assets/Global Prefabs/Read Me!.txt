@@ -2,7 +2,7 @@
 
 You can change the vlues to whatever you want it will be deleted at runtime for the main game when run from the menu.
 
-
+The GameManager will handle the pause menu and will display the player's global score on the pause menu.
 
 CODE:
 	Create a private variable:
@@ -47,4 +47,4 @@ CODE:
 		games.SIMPLE, 25
 
 
-	Let Alex know if any of this is dumb or doesn't make sense. ♥
+Let Alex know if any of this is dumb or doesn't make sense. ♥
