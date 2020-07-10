@@ -37,7 +37,7 @@ public class SceneChanger : MonoBehaviour
 
         //size = size lerp 1
 
-        fadeMat.SetColor("Color_78EBAF80", new Color(0,0,0, ))
+        fadeMat.SetColor("Color_78EBAF80", new Color(0, 0, 0, 0));
 
         //color = color A 1
 
