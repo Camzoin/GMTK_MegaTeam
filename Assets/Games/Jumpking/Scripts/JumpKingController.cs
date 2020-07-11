@@ -33,7 +33,7 @@ public class JumpKingController : MonoBehaviour
     {
         float inputAxis = Input.GetAxis("Horizontal");
 
-        Collider2D[] cast = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y) + (Vector2.down * 0.75f), new Vector2(1, 0.1f), 0f);
+        Collider2D[] cast = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y) + (Vector2.down * 0.75f), new Vector2(0.5f, 0.1f), 0f);
         grounded = cast.Length != 0;
         
         if (inputAxis >= 0.05)
@@ -67,7 +67,7 @@ public class JumpKingController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + (Vector3.down * 0.75f), new Vector3(1, 0.1f, 0.1f));
+        Gizmos.DrawCube(transform.position + (Vector3.down * 0.75f), new Vector3(0.5f, 0.1f, 0.1f));
     }
 
     public void Respawn()
