@@ -10,7 +10,7 @@ public class SceneChanger : MonoBehaviour
     float rotation = 45;
     bool fadingIn, fadingOut;
     float alpha = 0;
-    public int nextScene;
+    private int nextScene;
 
     private void Awake()
     {
@@ -72,7 +72,7 @@ public class SceneChanger : MonoBehaviour
         fadeMat.SetInt("Pattern" + Random.Range(1, 4), 1);
     }
 
-    public void ChangeScene()
+    public void ChangeScene(int sceneNumber)
     {
         //New Pattern / rotation
         RandomPattern();
@@ -80,5 +80,8 @@ public class SceneChanger : MonoBehaviour
 
         //start "anim"
         fadingOut = true;
-    }
+
+		//Set to scene
+		nextScene = sceneNumber;
+	}
 }

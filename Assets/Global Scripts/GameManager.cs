@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 	private GameObject pauseMenu;
 	private bool isPause = false;
 
+	private GameObject sceneChangerObj;
+	private SceneChanger sc;
+
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
 	public Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
 	{
@@ -73,6 +76,9 @@ public class GameManager : MonoBehaviour
 		pauseMenu = gameObject.transform.GetChild(0).gameObject;
 		pauseMenu.SetActive(false);
 
+		sceneChangerObj = gameObject.transform.GetChild(1).gameObject;
+		sc = sceneChangerObj.GetComponent<SceneChanger>();
+
 		//GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 		//gm.ScorePoints(GameManager.games.WhackAMole, 1f);
 
@@ -133,11 +139,16 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(gameSceneNumbers[currentGame]);
 	}
 
-	private void Restart()
+	private void ResetScoring()
 	{
 		score = 0f;
 		scorePerGame = new Dictionary<games, float>();
 
+	}
+
+	private void NextGame(games game)
+	{
+		sc.ChangeScene(gameSceneNumbers[game]);
 	}
 
 }
