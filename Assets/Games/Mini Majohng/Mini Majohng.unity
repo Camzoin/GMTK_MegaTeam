@@ -236,6 +236,90 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1001 &714286936
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196070799259636276, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004837006259439758, guid: 8736e0cc00937a64c8676764d6a2eab0,
+        type: 3}
+      propertyPath: m_Name
+      value: Mahjong_Table
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8736e0cc00937a64c8676764d6a2eab0, type: 3}
 --- !u!1 &1666172589
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +452,7 @@ MonoBehaviour:
   - {fileID: 5887843613644984331, guid: e9fd708c5b147584dbc40bf9f5e86cfa, type: 3}
   - {fileID: 5887843613644984331, guid: fb3fdd8f6c817424a934977cfdd356b1, type: 3}
   - {fileID: 5887843613644984331, guid: 6420358eb7c8e7840ab9bdfd5f78a176, type: 3}
-  pieceDimensions: {x: 1, y: 2, z: 0.75}
+  pieceDimensions: {x: 0.61, y: 0.05, z: 0.275}
   files:
   - {fileID: 4900000, guid: c1c6fe66fb59af54aadb01041fb847e2, type: 3}
 --- !u!4 &2127305517

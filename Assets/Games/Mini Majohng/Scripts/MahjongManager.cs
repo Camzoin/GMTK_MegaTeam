@@ -30,7 +30,7 @@ public class MahjongManager : MonoBehaviour
 
     public List<TextAsset> files;
 
-    public List<MahjongPiece>[,] boardState; //TODO fix this
+    public List<MahjongPiece>[,] boardState;
 
     private int totalPieces;
     private int tallestStack;
@@ -79,7 +79,7 @@ public class MahjongManager : MonoBehaviour
         {
             for (int j = 0; j < boardSize; j++)
             {
-                pieces[i, j] = text[i * boardSize + j];
+                pieces[i, j] = (int)char.GetNumericValue(text[i * boardSize + j]);
             }
         }
         return pieces;
@@ -89,8 +89,8 @@ public class MahjongManager : MonoBehaviour
     {
         var pieces = new List<MahjongPiece>();
         int i, j, k;
-        j = k = 0;
-        for (i = 0; i < totalPieces; i++)
+        i = j = k = 0;
+        for (; i < totalPieces; i++)
         {
             j += k % 4 == 4 ? 1 : 0;
 
@@ -119,25 +119,27 @@ public class MahjongManager : MonoBehaviour
 
     }
 
-    public bool SetPieces(int[,] pieces) //Call AddPiece into index according to text file
+    public bool SetPieces(int[,] pieces) //Call AddStack into index according to text file
     {
         for (int i = 0; i < boardSize; i++)
         {
             for (int j = 0; j < boardSize; j++)
             {
-                for (int n = pieces[i, j]; n > 0; n--)
-                {
-                    AddPiece(i, j);
-                }
+                AddStack(i, j, pieces[i, j]);
             }
         }
         return true;
     }
 
-    public bool AddPiece(int x, int y) //Adds a piece to the board state from the pieceBuffer
+    public bool AddStack(int x, int y, int n) //Adds a stack of pieces to the board state from piecebuffer
     {
         if (x >= boardSize || y >= boardSize) return false;
-        boardState[x, y].Add(pieceBuffer.Dequeue());
+        List<MahjongPiece> tList = new List<MahjongPiece>();
+        for(int i = 0; i < n; i++)
+        {
+            tList.Add(pieceBuffer.Dequeue());
+        }
+        boardState[x, y] = tList;
         return true;
     }
 
