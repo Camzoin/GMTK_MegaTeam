@@ -51,10 +51,10 @@ Material:
     m_Floats:
     - Pattern1: 1
     - Pattern2: 0
-    - Pattern3: 1
+    - Pattern3: 0
     - Pattern4: 0
     - Rotation: 45
-    - Size: 0
+    - Size: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
