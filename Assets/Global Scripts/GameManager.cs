@@ -56,6 +56,12 @@ public class GameManager : MonoBehaviour
 	private float startTime;
 	private float thisGameStartTime;
 
+	private void OnEnable()
+	{
+		//Cursor.visible = true;
+		//Cursor.lockState = CursorLockMode.None;
+	}
+
 	private void Awake()
 	{
 		//Make sure this is the only Game Manager
@@ -100,7 +106,6 @@ public class GameManager : MonoBehaviour
 				NextGame();
 			}
 		}
-		
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
@@ -189,8 +194,29 @@ public class GameManager : MonoBehaviour
 	private void NextGame()
 	{
 		currentGame++;
-		sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
-		thisGameStartTime = Time.time;
+
+		if (currentGame == gamesQueue.Count)
+		{
+			//if we have finished the game queue go back to the menu
+			//need to implement score screen
+
+			//End the game go to menu.
+			sc.ChangeScene(0);
+		}
+		else
+		{
+			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			thisGameStartTime = Time.time;
+		}
 	}
 
+	private void UploadScore()
+	{
+
+	}
+
+	private void DownloadScores()
+	{
+
+	}
 }
