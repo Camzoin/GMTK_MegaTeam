@@ -21,17 +21,25 @@ public class HammerController : MonoBehaviour
 
 		gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, mousePoint, hammerMoveSpeed);
 		transform.position = new Vector3(transform.position.x, yPos, (transform.position.z * 1.072f) - 4.75f);
+
+		if (Input.GetMouseButton(0))
+		{
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(-105f, transform.rotation.y, transform.rotation.z)), 0.5f);
+		}
+		else
+		{
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.rotation.y, transform.rotation.z)), 0.2f);
+		}
     }
 
-	private void OnCollisionEnter(Collision collision)
+	public void HitAMole()
 	{
-		if (collision.gameObject.tag == "Mole")
-		{
-			GameManager.instance.ScorePoints(GameManager.games.WHACKAMOLE, 1f);
-		}
-		else if (collision.gameObject.tag == "Bomb")
-		{
-			GameManager.instance.ScorePoints(GameManager.games.WHACKAMOLE, -1f);
-		}
+		GameManager.instance.ScorePoints(GameManager.games.WHACKAMOLE, 1f);
 	}
+
+	public void HitABomb()
+	{
+		GameManager.instance.ScorePoints(GameManager.games.WHACKAMOLE, -1f);
+	}
+
 }

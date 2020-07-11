@@ -53,7 +53,8 @@ namespace UnityTemplateProjects
         public float accuracy = 1f;
 
         public Camera mainCamera;
-        
+        public GameObject bulletHole;
+
         void OnEnable()
         {
             m_TargetCameraState.SetFromTransform(transform);
@@ -75,7 +76,7 @@ namespace UnityTemplateProjects
             //   Cursor.lockState = CursorLockMode.None;
             //}
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hitData = new RaycastHit();
 
@@ -83,25 +84,46 @@ namespace UnityTemplateProjects
                 {
                     if(hitData.transform.root != null)
                     {
-                        if (hitData.transform.gameObject.TryGetComponent(out Dummy a))
+                        if (hitData.transform.root.gameObject.TryGetComponent(out Dummy a))
                         {
-                            accuracy *= 1.1f;
-                            a.Up = false;
+                            if (a.Up)
+                            {
+                                accuracy *= 1.1f;
+                                a.Up = false;
+                                a.shotCD = 1.5f;
+                                GameObject bulletHoleObject = Instantiate(bulletHole, hitData.point, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                                bulletHoleObject.transform.parent = a.transform;
+                                bulletHoleObject.transform.localPosition -= new Vector3(0, 0, 0.11f);
+
+                                if (GameManager.instance != null)
+                                    GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, 1);
+                            }
+                            else Miss();
                         }
                     }
                     else if (hitData.transform.gameObject.TryGetComponent(out Dummy a))
                     {
-                        accuracy *= 1.1f;
-                        a.Up = false;
+                        if (a.Up)
+                        {
+                            accuracy *= 1.1f;
+                            a.Up = false;
+                            a.shotCD = 1.5f;
+                            GameObject bulletHoleObject = Instantiate(bulletHole, hitData.point, Quaternion.Euler(new Vector3(90, 0, 0)));
+                            bulletHoleObject.transform.parent = a.transform;
+                            
+                            if (GameManager.instance != null)
+                                GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, 1);
+                        }
+                        else Miss();
                     }
                     else
                     {
-                        accuracy *= 0.9f;
+                        Miss();
                     }
                 }
                 else
                 {
-                    accuracy *= 0.9f;
+                    Miss();
                 }
             }
 
@@ -126,6 +148,12 @@ namespace UnityTemplateProjects
 
             m_InterpolatingCameraState.UpdateTransform(transform);
         }
-    }
 
+        public void Miss()
+        {
+            accuracy *= 0.9f;
+            if (GameManager.instance != null)
+                GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, -1);
+        }
+    }
 }

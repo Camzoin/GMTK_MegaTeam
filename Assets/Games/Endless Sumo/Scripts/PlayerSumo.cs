@@ -43,11 +43,9 @@ public class PlayerSumo : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("I died");
-
         //take player points
 
-        //GameManager.instance.ScorePoints(GameManager.games.SUMO, -5);
+        GameManager.instance.ScorePoints(GameManager.games.SUMO, -5);
 
         //smash bros VFX
 

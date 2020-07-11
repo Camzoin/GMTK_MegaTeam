@@ -7,10 +7,14 @@ using TMPro;
 
 public class WordManager : MonoBehaviour
 {
+    [Header("References")]
     public TMP_InputField inputField;
     public Transform dynamicCanvas;
     public Transform currentWordCanvas;
+    [Header("Prefabs")]
     public GameObject WordPrefab;
+    public GameObject spawnEffect;
+    public GameObject explosionEffect;
     public Color32 textColor;
     public int wordsOnScreen;
 
@@ -18,12 +22,27 @@ public class WordManager : MonoBehaviour
     List<TextMeshProUGUI> wordList = new List<TextMeshProUGUI>();
     string[] wordPool;
     int[] wordIndices;
-    string currentWord;
+    public string currentWord;
 
     TextMeshProUGUI previousWord;
+
+    public delegate void EventHandler();
+
+    public event EventHandler OnCorrectInput;
+
+    public static WordManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+
         TextAsset wordFile = (TextAsset)Resources.Load("Words");
 
         wordPool = wordFile.text.Split('\r');
@@ -41,19 +60,21 @@ public class WordManager : MonoBehaviour
             previousWord = wordList[0];
             float newAlpha = 1.0f - i / (float)wordsOnScreen;
             wordList.Last().color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
-            wordList[0].color = Color.red;
-            wordList[0].rectTransform.parent = currentWordCanvas;
+            wordList[0].color = Color.green;
+            wordList[0].rectTransform.SetParent(currentWordCanvas);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
+            inputField.ActivateInputField();
             inputField.text = inputField.text.Replace(" ", "");
             if (inputField.text == currentWord)
             {
+                Instantiate(explosionEffect, wordList[0].transform.position, explosionEffect.transform.rotation);
                 Destroy(wordList[0].gameObject);
                 wordList.RemoveAt(0);
                 wordList.Add(SpawnWord(wordPool[wordsToUse[0]]));
@@ -61,12 +82,31 @@ public class WordManager : MonoBehaviour
                 AdjustWordAlphas();
 
                 currentWord = wordList[0].text;
-                wordList[0].color = Color.red;
-                wordList[0].rectTransform.parent = currentWordCanvas;
+                wordList[0].color = Color.green;
+                wordList[0].rectTransform.SetParent(currentWordCanvas);
                 inputField.text = string.Empty;
+                OnCorrectInput?.Invoke();
                 CameraShake.instance.Shake(0.3f);
                 GameManager.instance.ScorePoints(GameManager.games.TYPERACE, 1);
             }
+        }
+    }
+
+    public TextMeshProUGUI GetCurrentWord()
+    {
+        return wordList[0];
+    }
+
+    IEnumerator FadeIn(TextMeshProUGUI textMesh, float start, float end, float duration)
+    {
+        float timer = 0;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(start, end, timer);
+            textMesh.color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
+            yield return null;
         }
     }
 
@@ -74,6 +114,7 @@ public class WordManager : MonoBehaviour
     {
         for (int i = 0; i < wordList.Count; i++)
         {
+            float start = wordList[i].color.a;
             float newAlpha = 1.0f - i / (float)wordList.Count;
             wordList[i].color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
         }

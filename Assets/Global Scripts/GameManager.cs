@@ -44,13 +44,17 @@ public class GameManager : MonoBehaviour
 		{ games.SIMPLE, 25 }
 	};
 
-	private games currentGame;
+	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET};
+
+	private List<games> gamesQueue = new List<games>();
+	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	private int currentGame = -1;
 
 	private float score = 0f;
 	private Dictionary<games, float> scorePerGame = new Dictionary<games, float>();
 
-	public static float sessionLength;
 	private float startTime;
+	private float thisGameStartTime;
 
 	private void Awake()
 	{
@@ -78,25 +82,25 @@ public class GameManager : MonoBehaviour
 
 		sceneChangerObj = gameObject.transform.GetChild(1).gameObject;
 		sc = sceneChangerObj.GetComponent<SceneChanger>();
-
-		//GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-		//gm.ScorePoints(GameManager.games.WhackAMole, 1f);
-
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-		startTime = Time.time;
-    }
+		//Cursor.visible = false;
+	}
 
     // Update is called once per frame
     void Update()
     {
-		if (Time.time > startTime + sessionLength)
+		if (currentGame > -1)
 		{
-			//end the game / go to a summary screen and submit score to leader board
+			if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
+			{
+				NextGame();
+			}
 		}
+		
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
@@ -120,9 +124,21 @@ public class GameManager : MonoBehaviour
 
     }
 
-	public float GeScore()
+	public float GetTotalScore()
 	{
 		return score;
+	}
+
+	public float GetScore(games game)
+	{
+		if (scorePerGame.ContainsKey(game))
+		{
+			return scorePerGame[game];
+		}
+		else
+		{
+			return 0f;
+		}
 	}
 
 	public void ScorePoints(games game, float points)
@@ -141,19 +157,40 @@ public class GameManager : MonoBehaviour
 
 	public void RestartThisGame()
 	{
-		SceneManager.LoadScene(gameSceneNumbers[currentGame]);
+		SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
 	}
 
-	private void ResetScoring()
+	public void StartNewSession()
 	{
+		currentGame = -1;
 		score = 0f;
 		scorePerGame = new Dictionary<games, float>();
+		startTime = Time.time;
 
+		//generate game queue
+		for (int i = 0; i < gamesDurration.Count; i++)
+		{
+			//pick a random game in the working list
+			games nextGame = workingGames[Random.Range(0, workingGames.Count)];
+
+			//make sure we don't get the same game twice in a row.
+			//while (i > 0 && nextGame == gamesQueue[i - 1])
+			//{
+			//	nextGame = workingGames[Random.Range(0, workingGames.Count)];
+			//}
+
+			gamesQueue.Add(nextGame);
+			Debug.Log("Game: " + i + " Name: " + gamesQueue[i].ToString() + " Durration: " + gamesDurration[i].ToString());
+		}
+
+		NextGame();
 	}
 
-	private void NextGame(games game)
+	private void NextGame()
 	{
-		sc.ChangeScene(gameSceneNumbers[game]);
+		currentGame++;
+		sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+		thisGameStartTime = Time.time;
 	}
 
 }

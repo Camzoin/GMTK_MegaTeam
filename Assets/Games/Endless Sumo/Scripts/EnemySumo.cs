@@ -35,11 +35,9 @@ public class EnemySumo : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enemy died");
-
         //give player points
 
-        //GameManager.instance.ScorePoints(GameManager.games.SUMO, 1);
+        GameManager.instance.ScorePoints(GameManager.games.SUMO, 1);
 
 
         //smash bros VFX
