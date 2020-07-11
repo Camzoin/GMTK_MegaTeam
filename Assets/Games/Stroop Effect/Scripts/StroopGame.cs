@@ -5,18 +5,24 @@ using UnityEngine;
 public class StroopGame : MonoBehaviour
 {
     public List<GameObject> words;
+    public List<GameObject> shatWords;
     public List<Color> colors;
     public Transform wordHolder;
     string curWord;
     GameObject curWordObj;
     Color curWordColor;
     int colorInt;
+    int wordInt;
+    public AudioSource goodBeep, badBeep;
 
     // Start is called before the first frame update
     void Start()
     {
-        curWordObj = Instantiate(words[Random.Range(0, words.Count)], wordHolder);
-        curWordObj.GetComponent<Renderer>().material.color = colors[Random.Range(0, colors.Count)];
+        wordInt = Random.Range(0, 6);
+        colorInt = Random.Range(0, 6);
+
+        curWordObj = Instantiate(words[wordInt], wordHolder);
+        curWordObj.GetComponent<Renderer>().material.color = colors[colorInt];
     }
 
     // Update is called once per frame
@@ -32,13 +38,16 @@ public class StroopGame : MonoBehaviour
         if(colorInt == color)
         {
             //point
-            GameManager.instance.ScorePoints(GameManager.games.STROOP, 1);
+            GameManager.instance.ScorePoints(GameManager.games.STROOP, 1f);
+
+            goodBeep.Play();
 
             //new word
             NewWord();
         }
         else
         {
+            badBeep.Play();
             //lose point
             GameManager.instance.ScorePoints(GameManager.games.STROOP, -1);
         }
@@ -49,7 +58,16 @@ public class StroopGame : MonoBehaviour
         //make explode at some point
         Destroy(curWordObj);
 
-        curWordObj = Instantiate(words[Random.Range(0, words.Count)], wordHolder);
+        GameObject crumbleWord = Instantiate(shatWords[wordInt], curWordObj.transform.position, curWordObj.transform.rotation);
+
+        foreach (Renderer child in crumbleWord.GetComponentsInChildren<Renderer>())
+        {
+            child.material.color = colors[colorInt];
+        }
+
+        wordInt = Random.Range(0, 6);
+
+        curWordObj = Instantiate(words[wordInt], wordHolder);
         SetColor();
     }
 
