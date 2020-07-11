@@ -8,17 +8,18 @@ using TMPro;
 public class WordManager : MonoBehaviour
 {
     public TextMeshProUGUI wordUI;
-    public TextMeshProUGUI inputField;
+    public TMP_InputField inputField;
 
-    static string[] wordPool;
+    string[] wordPool;
     int[] wordIndices;
-    int[] wordsToUse;
+    List<int> wordsToUse = new List<int>();
     string currentWord;
     // Start is called before the first frame update
     void Start()
     {
         TextAsset wordFile = (TextAsset)Resources.Load("Words");
         wordPool = wordFile.text.Split('\r');
+        RemoveNewLineChars();
         wordIndices = GenerateIndexArray(wordPool.Length);
         ShuffleArray(wordIndices, wordIndices.Length);
         wordsToUse = SplitArray(wordIndices, 500);
@@ -31,9 +32,13 @@ public class WordManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            inputField.text = inputField.text.Replace(" ", "");
             if (inputField.text == currentWord)
             {
-                wordUI.text.Replace(currentWord, "");
+                wordUI.text = wordUI.text.Replace(currentWord + " ", "");
+                wordsToUse.RemoveAt(0);
+                currentWord = wordPool[wordsToUse[0]];
+                inputField.text = string.Empty;
             }
         }
     }
@@ -45,11 +50,11 @@ public class WordManager : MonoBehaviour
 
     void DisplayWords()
     {
-        for (int i = 0; i < wordsToUse.Length - 1; i++)
+        for (int i = 0; i < wordsToUse.Count - 1; i++)
         {
-            wordUI.text += wordPool[wordsToUse[i]].Replace("\n","") + " ";
+            wordUI.text += wordPool[wordsToUse[i]] + " ";
         }
-
+        wordUI.text += wordPool[wordsToUse.Count];
     }
 
     void ShuffleArray(int[] arr, int wordCount)
@@ -63,14 +68,14 @@ public class WordManager : MonoBehaviour
             arr[j] = temp;
         }
     }
-    int[] SplitArray(int[] arr, int range)
+    List<int> SplitArray(int[] arr, int range)
     {
         int[] newArr = new int[range];
         for (int i = 0; i < range; i++)
         {
             newArr[i] = arr[i];
         }
-        return newArr;
+        return newArr.ToList<int>();
     }
 
     int[] GenerateIndexArray(int range)
@@ -81,5 +86,13 @@ public class WordManager : MonoBehaviour
             newArr[i] = i;
         }
         return newArr;
+    }
+
+    void RemoveNewLineChars()
+    {
+        for (int i = 0; i < wordPool.Length; i++)
+        {
+            wordPool[i] = wordPool[i].Replace("\n", "");
+        }
     }
 }
