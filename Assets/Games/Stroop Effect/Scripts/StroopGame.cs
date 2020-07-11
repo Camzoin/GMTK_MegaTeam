@@ -13,6 +13,7 @@ public class StroopGame : MonoBehaviour
     Color curWordColor;
     int colorInt;
     int wordInt;
+    public AudioSource goodBeep, badBeep;
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +40,14 @@ public class StroopGame : MonoBehaviour
             //point
             GameManager.instance.ScorePoints(GameManager.games.STROOP, 1f);
 
+            goodBeep.Play();
+
             //new word
             NewWord();
         }
         else
         {
+            badBeep.Play();
             //lose point
             GameManager.instance.ScorePoints(GameManager.games.STROOP, -1);
         }
