@@ -133,39 +133,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammer
       objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
+    - target: {fileID: 2079162044148186484, guid: 5ad55cc381bdf244e9faadc4030a88a7,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1553173410740891640, guid: 05b5140bf886f8845beb65908e656c71,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
+    - target: {fileID: 2079162044148186484, guid: 5ad55cc381bdf244e9faadc4030a88a7,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8887510326346270412, guid: 5ad55cc381bdf244e9faadc4030a88a7,

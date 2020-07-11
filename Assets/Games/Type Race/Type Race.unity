@@ -512,7 +512,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481b16eaa0074374998e6d4f6eee5f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnitude: 1
+  magnitude: 2
   roughness: 10
   maxAngle: 3
   decay: 2
@@ -1003,6 +1003,10 @@ MonoBehaviour:
   dynamicCanvas: {fileID: 466707725}
   currentWordCanvas: {fileID: 1429287716}
   WordPrefab: {fileID: 7550937934649577728, guid: 8a98dabced6739e4eac663e8c4bcbef7,
+    type: 3}
+  spawnEffect: {fileID: 5307469063264359110, guid: 0d573385200b93b42aa914ca5a366245,
+    type: 3}
+  explosionEffect: {fileID: 5307469063264359110, guid: 5b439306065824841909922bae92862a,
     type: 3}
   textColor:
     serializedVersion: 2
