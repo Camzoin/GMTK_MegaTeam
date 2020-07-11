@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Yellow
-  m_Shader: {fileID: -6465566751694194690, guid: 181a05e2165f9c0439763cb32e928dcc,
+  m_Shader: {fileID: -6465566751694194690, guid: b1c0cb7178f0f564983259408ac48cce,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -100,6 +100,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_71579AC4: {r: 0.04096196, g: 1, b: 0, a: 1}
     - Color_71D24A53: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

@@ -77,7 +77,32 @@ namespace UnityTemplateProjects
 
             if (Input.GetMouseButton(0))
             {
+                RaycastHit hitData = new RaycastHit();
 
+                if(Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitData))
+                {
+                    if(hitData.transform.root != null)
+                    {
+                        if (hitData.transform.gameObject.TryGetComponent(out Dummy a))
+                        {
+                            accuracy *= 1.1f;
+                            a.Up = false;
+                        }
+                    }
+                    else if (hitData.transform.gameObject.TryGetComponent(out Dummy a))
+                    {
+                        accuracy *= 1.1f;
+                        a.Up = false;
+                    }
+                    else
+                    {
+                        accuracy *= 0.9f;
+                    }
+                }
+                else
+                {
+                    accuracy *= 0.9f;
+                }
             }
 
             if (Input.GetMouseButton(1))
