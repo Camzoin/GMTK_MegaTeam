@@ -120,6 +120,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+	public float GeScore()
+	{
+		return score;
+	}
+
 	public void ScorePoints(games game, float points)
 	{
 		score += points;
