@@ -47,7 +47,7 @@ public class PlayerSumo : MonoBehaviour
 
         //take player points
 
-        GameManager.instance.ScorePoints(GameManager.games.SUMO, -5);
+        //GameManager.instance.ScorePoints(GameManager.games.SUMO, -5);
 
         //smash bros VFX
 
