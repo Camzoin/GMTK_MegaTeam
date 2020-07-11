@@ -9,7 +9,8 @@ CODE:
 	GameManager gm;
 
 	On Awake do this:
-	gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+	~~~gm = GameObject.Find("GameManager").GetComponent<GameManager>();~~~
+	gm = GameManager.instance;
 
 	Whenever you want to score points do this:
 	gm.ScorePoints(GameManager.games.YOURGAMEENUMNAME, 1f);

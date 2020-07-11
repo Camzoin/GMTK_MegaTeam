@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-	private static GameManager instance = null;
+	public static GameManager instance = null;
 
 	private GameObject pauseMenu;
 	private bool isPause = false;
@@ -119,6 +119,11 @@ public class GameManager : MonoBehaviour
 		}
 
     }
+
+	public float GeScore()
+	{
+		return score;
+	}
 
 	public void ScorePoints(games game, float points)
 	{
