@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -10,10 +11,20 @@ public class SceneChanger : MonoBehaviour
     bool fadingIn, fadingOut;
     float alpha = 0;
 
+    private void Awake()
+    {
+        fadeMat.SetInt("Pattern1", 0);
+        fadeMat.SetInt("Pattern2", 0);
+        fadeMat.SetInt("Pattern3", 0);
+        fadeMat.SetInt("Pattern4", 0);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        RandomPattern();
+
         fadeMat.SetFloat("Rotation", rotation);
         fadeMat.SetInt("Pattern" + Random.Range(1, 4), 1);
     }
@@ -23,30 +34,31 @@ public class SceneChanger : MonoBehaviour
     {
         if (fadingOut == true)
         {
+            size = Mathf.Lerp(size, 1, Time.deltaTime);
+            alpha = Mathf.Lerp(alpha, 1, 5 * Time.deltaTime);
 
+            if(Mathf.Approximately(size, 1))
+            {
+                fadingOut = false;
+                fadingIn = true;
+                SceneManager.LoadScene();
+            }
         }
 
         if (fadingIn == true)
         {
+            size = Mathf.Lerp(size, 0, Time.deltaTime);
+            alpha = Mathf.Lerp(alpha, 0, 5* Time.deltaTime);
 
+            if (Mathf.Approximately(size, 0))
+            {
+                fadingIn = false;
+            }
         }
-
-        //fade out
 
         fadeMat.SetFloat("Size", size);
 
-        //size = size lerp 1
-
-        fadeMat.SetColor("Color_78EBAF80", new Color(0, 0, 0, 0));
-
-        //color = color A 1
-
-
-        //fade in
-
-        //size = size lerp 0
-
-        //color = color A 0
+        fadeMat.SetColor("Color_78EBAF80", new Color(0, 0, 0, alpha));
     }
 
     void RandomPattern()
@@ -65,5 +77,7 @@ public class SceneChanger : MonoBehaviour
         RandomPattern();
         fadeMat.SetFloat("Rotation", Random.Range(0f, 360f));
 
+        //start "anim"
+        fadingOut = true;
     }
 }
