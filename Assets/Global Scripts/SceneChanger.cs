@@ -10,6 +10,7 @@ public class SceneChanger : MonoBehaviour
     float rotation = 45;
     bool fadingIn, fadingOut;
     float alpha = 0;
+    public int nextScene;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class SceneChanger : MonoBehaviour
             {
                 fadingOut = false;
                 fadingIn = true;
-                SceneManager.LoadScene();
+                SceneManager.LoadScene(nextScene);
             }
         }
 
