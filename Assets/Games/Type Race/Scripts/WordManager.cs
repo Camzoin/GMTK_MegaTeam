@@ -53,7 +53,7 @@ public class WordManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             inputField.text = inputField.text.Replace(" ", "");
             if (inputField.text == currentWord)
