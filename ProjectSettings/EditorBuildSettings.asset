@@ -5,7 +5,100 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Users/Justice/Justice_Testing.unity
+    guid: a1a0352438bdec54c8b00d8807895e39
+  - enabled: 0
+    path: Assets/Test Scenes/Joey_ArtTests.unity
+    guid: 52f34ac87e690c248807602700a62093
+  - enabled: 0
+    path: Assets/Test Scenes/SoreiScene.unity
+    guid: 99948633f4b765346a5bd03e3f55f75e
+  - enabled: 0
+    path: Assets/Test Scenes/Soren_TestScene.unity
+    guid: bacf49f9d61dda24a818918e74aa942d
+  - enabled: 0
+    path: Assets/Test Scenes/CamTesting.unity
+    guid: d0e672fce79501f4eb3eb1e4780fa88e
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/Main Menu.unity
+    guid: 6b575c0f0ebdc294484f75b04759a1cb
+  - enabled: 1
+    path: Assets/Games/Limbo/Limbo.unity
+    guid: 5c762942d33c8cf498e7a4649dbe9023
+  - enabled: 1
+    path: Assets/Games/Hidden Bridge/Hidden Bridge.unity
+    guid: 9bb105a151084344d9758d6898a40a18
+  - enabled: 1
+    path: Assets/Games/Jumpking/jumpking.unity
+    guid: d2b15bd4e3810c443918126e9e72aeb9
+  - enabled: 1
+    path: Assets/Games/Endless Runner/Endless RUnner.unity
+    guid: 01e29040502c97a4bb1e9ba59c6bda94
+  - enabled: 1
+    path: Assets/Games/Getting Over it/Getting over it.unity
+    guid: ddb65f4faa2663f488ea6e1888542fc3
+  - enabled: 1
+    path: Assets/Games/Duck Hunt/Duck Hunt.unity
+    guid: d34c06afff06018489ee7fd6aacecb33
+  - enabled: 1
+    path: Assets/Games/Pong/Pong.unity
+    guid: f5b41aad009af734ca5a721b0fa83a5c
+  - enabled: 1
+    path: Assets/Games/Stroop Effect/Stroop Effect.unity
+    guid: 7df084a470720764b89178cbf806408a
+  - enabled: 1
+    path: Assets/Games/Aim Trainer/Aim Trainer.unity
+    guid: f0bf5211a692f3d43a4fe7e477ec6044
+  - enabled: 1
+    path: Assets/Games/Bow Aim Trainer/Bow Aim Trainer.unity
+    guid: 79ab8b1d4b3d2af48bff3efd1da52f90
+  - enabled: 1
+    path: Assets/Games/Tanglemaster/Tanglemaster.unity
+    guid: 39cd77545c0324c4e80a0a91393af732
+  - enabled: 1
+    path: Assets/Games/Tredmill Runner/Tredmill Runner.unity
+    guid: 8cad8d228d60c9b49a5bc4b3bfda929e
+  - enabled: 1
+    path: Assets/Games/Water Well/Water Well.unity
+    guid: 929de88df30f9114380d69082b8e0587
+  - enabled: 1
+    path: Assets/Games/Card Match 2/Card Match 2.unity
+    guid: 00776b2bd9d690d4fa7ab4a12d67e9a1
+  - enabled: 1
+    path: Assets/Games/Under Tree Mario/Under Tree Mario.unity
+    guid: 447111f409d60c748a30294e48e99d82
+  - enabled: 1
+    path: Assets/Games/Mini Majohng/Mini Majohng.unity
+    guid: db94d6e26de85534ebb9bcc1e63dfe61
+  - enabled: 1
+    path: Assets/Games/3rd Person Pacman/3rd Person Pacman.unity
+    guid: 549a67fcd35eed9459f7f59c25d6dff0
+  - enabled: 1
+    path: Assets/Games/Cookie Clicker/Cookie Clicker.unity
+    guid: 91c2d0fbcc2cbef43b033770079d9dbb
+  - enabled: 1
+    path: Assets/Games/Stay in safe area/Stay in safe area.unity
+    guid: 7b5e038d68c35194c93fa2e26e0e7c8c
+  - enabled: 1
+    path: Assets/Games/Type Race/Type Race.unity
+    guid: e2ee60a32e3f08d4997896a20b436e00
+  - enabled: 1
+    path: Assets/Games/Endless Sumo/Endless Sumo.unity
+    guid: 5b6e32d53e7ee4a4f9f43499720387fa
+  - enabled: 1
+    path: Assets/Games/Osu/Osu.unity
+    guid: de0562ee15e7e7545aa26ecf16319e93
+  - enabled: 1
+    path: Assets/Games/Toilet Paper/Toilet Paper.unity
+    guid: 63394440d7e72be46a2da287b7091d2d
+  - enabled: 1
+    path: Assets/Games/Whack-a-mole/Whack-a-mole.unity
+    guid: 9083131a429d87e4eb97fa03d69b8bc3
+  - enabled: 1
+    path: Assets/Games/IQ test/IQ test.unity
+    guid: 01c8d03028744ac4cb5a1f4769f06111
   m_configObjects: {}
