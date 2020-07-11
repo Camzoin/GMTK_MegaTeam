@@ -17,6 +17,9 @@ public class JumpKingController : MonoBehaviour
 
     public UnityEngine.Rendering.PostProcessing.PostProcessVolume dieVolume;
 
+    public List<AudioClip> jumpClips = new List<AudioClip>();
+    public AudioSource jumpSFX;
+    public AudioSource dieSFX;
     public Animator animator;
     public GameObject cameraObject;
     public new Rigidbody2D rigidbody2D;
@@ -59,6 +62,9 @@ public class JumpKingController : MonoBehaviour
         else
         {
             animator.SetBool("InputState", false);
+
+            if((Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0)) && grounded)
+                jumpSFX.PlayOneShot(jumpClips[Random.Range(0, jumpClips.Count)]);
 
             if (sprite.flipX)
                 rigidbody2D.AddForce(new Vector2(Mathf.Clamp(Time.deltaTime * currentHeldCharge * jumpLengthX, maxJumpDistance * -1, maxJumpDistance), Mathf.Clamp(Time.deltaTime * currentHeldCharge * jumpLengthY, maxJumpDistance * -1, maxJumpDistance)), ForceMode2D.Force);
@@ -112,6 +118,11 @@ public class JumpKingController : MonoBehaviour
 
     public void Respawn()
     {
+        if(!respawn)
+        {
+            dieSFX.Play();
+        }
+
         respawn = true;
     }
 
