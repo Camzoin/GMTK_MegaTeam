@@ -72,7 +72,7 @@ public class SceneChanger : MonoBehaviour
         fadeMat.SetInt("Pattern" + Random.Range(1, 4), 1);
     }
 
-    void ChangeScene()
+    public void ChangeScene()
     {
         //New Pattern / rotation
         RandomPattern();
