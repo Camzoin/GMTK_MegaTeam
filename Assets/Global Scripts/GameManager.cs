@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 	private bool isPause = false;
 
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
-	private Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
+	public Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
 	{
 		//Menu Scene: 0
 		{ games.LIMBO, 1 },
