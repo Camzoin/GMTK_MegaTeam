@@ -21,11 +21,16 @@ public class MoleManager : MonoBehaviour
 			int count = 0;
 			foreach (Transform molePoint in molePoints)
 			{
+				//Hide Sphere
+				molePoint.gameObject.SetActive(false);
+
 				if (count == spawnAt)
 				{
 					//Spawn Mole at point
 					Instantiate(molePrefab, molePoint.position, Quaternion.identity);
 					molesSpawned++;
+
+					
 				}
 				count++;
 			}

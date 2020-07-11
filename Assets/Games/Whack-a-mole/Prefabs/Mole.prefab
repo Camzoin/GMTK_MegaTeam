@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9008320539610496356}
   - component: {fileID: 3597315040509850865}
+  - component: {fileID: 4394747704669038154}
   m_Layer: 0
   m_Name: Mole
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3464682718849380293}
+  - {fileID: 4285280970069866264}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,6 +51,97 @@ MonoBehaviour:
   minTimeBetweenPops: 0.8
   maxTimeBetweenPops: 8
   bombPercentage: 0.25
+  mole: {fileID: 4278092265991435647}
+  bomb: {fileID: 4278092265991435647}
+--- !u!136 &4394747704669038154
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169410092061192493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.110279
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.55513954, z: 0}
+--- !u!1001 &364740794225410607
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9008320539610496356}
+    m_Modifications:
+    - target: {fileID: 3836047820051672973, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_Name
+      value: Prefab_wam_molehole
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a08fb18889cc43840a719b6ca9d29831, type: 3}
+--- !u!4 &4285280970069866264 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4501261548595393847, guid: a08fb18889cc43840a719b6ca9d29831,
+    type: 3}
+  m_PrefabInstance: {fileID: 364740794225410607}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5666064330048576386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,6 +153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Prefab_wam_mole
+      objectReference: {fileID: 0}
+    - target: {fileID: 8502568785697140477, guid: d643aab1c4a755740a31f0347e47d8b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9130170763607618631, guid: d643aab1c4a755740a31f0347e47d8b1,
         type: 3}
@@ -118,6 +216,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d643aab1c4a755740a31f0347e47d8b1, type: 3}
+--- !u!1 &4278092265991435647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8502568785697140477, guid: d643aab1c4a755740a31f0347e47d8b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5666064330048576386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3464682718849380293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9130170763607618631, guid: d643aab1c4a755740a31f0347e47d8b1,
