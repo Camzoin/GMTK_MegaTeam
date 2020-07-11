@@ -12,12 +12,12 @@ public class Dummy : MonoBehaviour
     void Update()
     {
         if (Up)
-            transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 0), 0.02f));
+            transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 0), 0.025f));
         else
             if(shot)
                 transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.eulerAngles, new Vector3(90, 0, 0), 0.08f));
             else
-                transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.eulerAngles, new Vector3(90, 0, 0), 0.01f));
+                transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.eulerAngles, new Vector3(90, 0, 0), 0.025f));
 
         shot = shotCD > 0;
         shotCD -= Time.deltaTime;
