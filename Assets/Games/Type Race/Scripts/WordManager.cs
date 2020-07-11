@@ -22,12 +22,27 @@ public class WordManager : MonoBehaviour
     List<TextMeshProUGUI> wordList = new List<TextMeshProUGUI>();
     string[] wordPool;
     int[] wordIndices;
-    string currentWord;
+    public string currentWord;
 
     TextMeshProUGUI previousWord;
+
+    public delegate void EventHandler();
+
+    public event EventHandler OnCorrectInput;
+
+    public static WordManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+
         TextAsset wordFile = (TextAsset)Resources.Load("Words");
 
         wordPool = wordFile.text.Split('\r');
@@ -46,7 +61,7 @@ public class WordManager : MonoBehaviour
             float newAlpha = 1.0f - i / (float)wordsOnScreen;
             wordList.Last().color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
             wordList[0].color = Color.green;
-            wordList[0].rectTransform.parent = currentWordCanvas;
+            wordList[0].rectTransform.SetParent(currentWordCanvas);
         }
     }
 
@@ -55,6 +70,7 @@ public class WordManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
+            inputField.ActivateInputField();
             inputField.text = inputField.text.Replace(" ", "");
             if (inputField.text == currentWord)
             {
@@ -67,12 +83,18 @@ public class WordManager : MonoBehaviour
 
                 currentWord = wordList[0].text;
                 wordList[0].color = Color.green;
-                wordList[0].rectTransform.parent = currentWordCanvas;
+                wordList[0].rectTransform.SetParent(currentWordCanvas);
                 inputField.text = string.Empty;
+                OnCorrectInput?.Invoke();
                 CameraShake.instance.Shake(0.3f);
                 GameManager.instance.ScorePoints(GameManager.games.TYPERACE, 1);
             }
         }
+    }
+
+    public TextMeshProUGUI GetCurrentWord()
+    {
+        return wordList[0];
     }
 
     IEnumerator FadeIn(TextMeshProUGUI textMesh, float start, float end, float duration)
