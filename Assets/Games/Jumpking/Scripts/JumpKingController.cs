@@ -15,6 +15,8 @@ public class JumpKingController : MonoBehaviour
     public float fillBarSmoothing = 1f;
     public bool grounded = false;
 
+    public UnityEngine.Rendering.PostProcessing.PostProcessVolume dieVolume;
+
     public Animator animator;
     public GameObject cameraObject;
     public new Rigidbody2D rigidbody2D;
@@ -22,6 +24,9 @@ public class JumpKingController : MonoBehaviour
     public SpriteRenderer sprite;
     public Vector3 respawnLocation;
 
+    bool respawn = false;
+    float respawnCharge = 0f;
+    
     [HideInInspector] public float currentHeldCharge = 0f;
         
     private void OnEnable()
@@ -68,11 +73,11 @@ public class JumpKingController : MonoBehaviour
 
         if (currentHeldCharge == 0f)
             state = 0;
-        else if (currentHeldCharge < 0.4f)
+        else if (currentHeldCharge < 0.15f)
             state = 1;
-        else if (currentHeldCharge < 0.65f)
+        else if (currentHeldCharge < 0.4f)
             state = 2;
-        else if (currentHeldCharge > 0.75f)
+        else if (currentHeldCharge > 0.5f)
             state = 3;
 
         animator.SetBool("Grounded", grounded);
@@ -81,6 +86,23 @@ public class JumpKingController : MonoBehaviour
         cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, transform.position + new Vector3(0, 5, -10), Time.deltaTime * cameraSmoothing);
 
         fillBar.fillAmount = Mathf.Lerp(fillBar.fillAmount, Mathf.Clamp(Mathf.Clamp(currentHeldCharge * jumpLengthX, 0, maxJumpDistance) / maxJumpDistance, 0, 1), Time.deltaTime * fillBarSmoothing);
+
+        if (respawn)
+        {
+            respawnCharge = Mathf.Clamp(respawnCharge + (Time.deltaTime * 1.2f), 0, 1);
+            dieVolume.weight = respawnCharge;
+
+            if (dieVolume.weight >= 0.95f)
+            {
+                respawn = false;
+                DoRespawn();
+            }
+        }
+        else
+        {
+            respawnCharge = Mathf.Clamp(respawnCharge - (Time.deltaTime * 1.5f), 0, 1);
+            dieVolume.weight = respawnCharge;
+        }
     }
 
     private void OnDrawGizmos()
@@ -89,6 +111,11 @@ public class JumpKingController : MonoBehaviour
     }
 
     public void Respawn()
+    {
+        respawn = true;
+    }
+
+    private void DoRespawn()
     {
         transform.position = respawnLocation;
         rigidbody2D.velocity = Vector2.zero;
