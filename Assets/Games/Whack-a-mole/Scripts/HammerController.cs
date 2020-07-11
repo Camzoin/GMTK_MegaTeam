@@ -7,6 +7,10 @@ public class HammerController : MonoBehaviour
 	public float hammerMoveSpeed;
 	private float yPos;
 
+	public AudioSource hammerSwish;
+
+	private bool wasDownLastFrame = false;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -24,10 +28,16 @@ public class HammerController : MonoBehaviour
 
 		if (Input.GetMouseButton(0))
 		{
+			if (!wasDownLastFrame)
+			{
+				hammerSwish.Play();
+			}
+			wasDownLastFrame = true;
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(-105f, transform.rotation.y, transform.rotation.z)), 0.5f);
 		}
 		else
 		{
+			wasDownLastFrame = false;
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.rotation.y, transform.rotation.z)), 0.2f);
 		}
     }
@@ -41,5 +51,4 @@ public class HammerController : MonoBehaviour
 	{
 		GameManager.instance.ScorePoints(GameManager.games.WHACKAMOLE, -1f);
 	}
-
 }

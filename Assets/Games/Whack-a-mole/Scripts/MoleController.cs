@@ -14,6 +14,10 @@ public class MoleController : MonoBehaviour
 	public GameObject mole;
 	public GameObject bomb;
 
+	public AudioSource whackSound;
+	public AudioSource wahSound;
+	public AudioSource boomSound;
+
 	private float timeOfNextPop;
 	private float timeOfUnPop;
 
@@ -83,12 +87,27 @@ public class MoleController : MonoBehaviour
 		{
 			if (state == "Bomb")
 			{
+				boomSound.Play();
+
 				//explosion
 				UnPop();
 				collision.gameObject.GetComponent<HammerController>().HitABomb();
 			}
 			else if(state == "Mole")
 			{
+				if (wahSound.isPlaying)
+				{
+					wahSound.Stop();
+				}
+				wahSound.pitch = wahSound.pitch + Random.Range(-0.25f, 0.25f);
+				wahSound.Play();
+
+				if (whackSound.isPlaying)
+				{
+					whackSound.Stop();
+				}
+				whackSound.Play();
+
 				//Mole oof
 				UnPop();
 				collision.gameObject.GetComponent<HammerController>().HitAMole();
