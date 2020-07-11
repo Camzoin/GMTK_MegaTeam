@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
 
 	private GameObject sceneChangerObj;
 	private SceneChanger sc;
+
+    [SerializeField]
+    private GameObject popinText;
 
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
 	public Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
@@ -206,7 +210,8 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
-			thisGameStartTime = Time.time;
+            StartCoroutine(DelayEnable(popinText, 2, true));
+            thisGameStartTime = Time.time;
 		}
 	}
 
@@ -219,4 +224,16 @@ public class GameManager : MonoBehaviour
 	{
 
 	}
+
+    private IEnumerator DelayEnable(GameObject gameObject, float delay, bool enabled)
+    {
+        float timer = 0;
+
+        while (timer < delay)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        gameObject.SetActive(enabled);
+    }
 }
