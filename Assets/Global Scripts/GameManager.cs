@@ -93,11 +93,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-		if (currentGame > -1 && Time.time >= startTime + gamesDurration[currentGame])
+		if (currentGame > -1)
 		{
-			NextGame();
+			if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
+			{
+				NextGame();
+			}
 		}
+		
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
@@ -187,6 +190,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentGame++;
 		sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+		thisGameStartTime = Time.time;
 	}
 
 }
