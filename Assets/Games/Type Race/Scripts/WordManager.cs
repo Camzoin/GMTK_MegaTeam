@@ -10,9 +10,10 @@ public class WordManager : MonoBehaviour
     public TextMeshProUGUI wordUI;
     public TMP_InputField inputField;
 
+    List<int> wordsToUse = new List<int>();
+    TMP_TextInfo wordTextInfo;
     string[] wordPool;
     int[] wordIndices;
-    List<int> wordsToUse = new List<int>();
     string currentWord;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,9 @@ public class WordManager : MonoBehaviour
         wordsToUse = SplitArray(wordIndices, 500);
         DisplayWords();
         currentWord = wordPool[wordsToUse[0]];
+        wordUI.ForceMeshUpdate();
+        wordTextInfo = wordUI.textInfo;
+        wordTextInfo.characterInfo[wordTextInfo.wordInfo[0].firstCharacterIndex].color = new Color32(255, 0, 0, 255);
     }
 
     // Update is called once per frame
@@ -39,6 +43,8 @@ public class WordManager : MonoBehaviour
                 wordsToUse.RemoveAt(0);
                 currentWord = wordPool[wordsToUse[0]];
                 inputField.text = string.Empty;
+                CameraShake.instance.Shake(0.3f);
+                GameManager.instance.ScorePoints(GameManager.games.TYPERACE, 1);
             }
         }
     }
