@@ -7,28 +7,43 @@ using TMPro;
 
 public class WordManager : MonoBehaviour
 {
-    public TextMeshProUGUI wordUI;
     public TMP_InputField inputField;
+    public Transform dynamicCanvas;
+    public Transform currentWordCanvas;
+    public GameObject WordPrefab;
+    public Color32 textColor;
+    public int wordsOnScreen;
 
     List<int> wordsToUse = new List<int>();
-    TMP_TextInfo wordTextInfo;
+    List<TextMeshProUGUI> wordList = new List<TextMeshProUGUI>();
     string[] wordPool;
     int[] wordIndices;
     string currentWord;
+
+    TextMeshProUGUI previousWord;
     // Start is called before the first frame update
     void Start()
     {
         TextAsset wordFile = (TextAsset)Resources.Load("Words");
+
         wordPool = wordFile.text.Split('\r');
         RemoveNewLineChars();
         wordIndices = GenerateIndexArray(wordPool.Length);
         ShuffleArray(wordIndices, wordIndices.Length);
         wordsToUse = SplitArray(wordIndices, 500);
-        DisplayWords();
+
         currentWord = wordPool[wordsToUse[0]];
-        wordUI.ForceMeshUpdate();
-        wordTextInfo = wordUI.textInfo;
-        wordTextInfo.characterInfo[wordTextInfo.wordInfo[0].firstCharacterIndex].color = new Color32(255, 0, 0, 255);
+
+        for (int i = 0; i < wordsOnScreen; i++)
+        {
+            wordList.Add(SpawnWord(wordPool[wordsToUse[0]]));
+            wordsToUse.RemoveAt(0);
+            previousWord = wordList[0];
+            float newAlpha = 1.0f - i / (float)wordsOnScreen;
+            wordList.Last().color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
+            wordList[0].color = Color.red;
+            wordList[0].rectTransform.parent = currentWordCanvas;
+        }
     }
 
     // Update is called once per frame
@@ -39,9 +54,15 @@ public class WordManager : MonoBehaviour
             inputField.text = inputField.text.Replace(" ", "");
             if (inputField.text == currentWord)
             {
-                wordUI.text = wordUI.text.Replace(currentWord + " ", "");
+                Destroy(wordList[0].gameObject);
+                wordList.RemoveAt(0);
+                wordList.Add(SpawnWord(wordPool[wordsToUse[0]]));
                 wordsToUse.RemoveAt(0);
-                currentWord = wordPool[wordsToUse[0]];
+                AdjustWordAlphas();
+
+                currentWord = wordList[0].text;
+                wordList[0].color = Color.red;
+                wordList[0].rectTransform.parent = currentWordCanvas;
                 inputField.text = string.Empty;
                 CameraShake.instance.Shake(0.3f);
                 GameManager.instance.ScorePoints(GameManager.games.TYPERACE, 1);
@@ -49,20 +70,36 @@ public class WordManager : MonoBehaviour
         }
     }
 
-    string RandomWord()
+    void AdjustWordAlphas()
     {
-        return wordPool[Random.Range(0, wordPool.Length)];
-    }
-
-    void DisplayWords()
-    {
-        for (int i = 0; i < wordsToUse.Count - 1; i++)
+        for (int i = 0; i < wordList.Count; i++)
         {
-            wordUI.text += wordPool[wordsToUse[i]] + " ";
+            float newAlpha = 1.0f - i / (float)wordList.Count;
+            wordList[i].color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
         }
-        wordUI.text += wordPool[wordsToUse.Count];
     }
 
+    TextMeshProUGUI SpawnWord(string word)
+    {
+        Vector3 newPos = new Vector3(Random.Range(-90, 90), Random.Range(0, 50), 90);
+        if (previousWord != null)
+        {
+            Rect testRect = new Rect(newPos, previousWord.rectTransform.rect.size);
+            for (int i = 0; i < 100; i++)
+            {
+                if (previousWord.rectTransform.rect.Overlaps(testRect))
+                {
+                    newPos = new Vector3(Random.Range(-90, 90), Random.Range(0, 50), 90);
+                    break;
+                }
+            }
+        }
+
+        TextMeshProUGUI textUI = Instantiate(WordPrefab, newPos, transform.rotation, dynamicCanvas).GetComponent<TextMeshProUGUI>();
+        textUI.text = word;
+
+        return textUI;
+    }
     void ShuffleArray(int[] arr, int wordCount)
     {
         for (int i = wordCount - 1; i > 0; i--)
