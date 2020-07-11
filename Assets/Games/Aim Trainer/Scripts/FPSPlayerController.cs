@@ -94,6 +94,9 @@ namespace UnityTemplateProjects
                                 GameObject bulletHoleObject = Instantiate(bulletHole, hitData.point, Quaternion.Euler(new Vector3(-90, 0, 0)));
                                 bulletHoleObject.transform.parent = a.transform;
                                 bulletHoleObject.transform.localPosition -= new Vector3(0, 0, 0.11f);
+
+                                if (GameManager.instance != null)
+                                    GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, 1);
                             }
                             else Miss();
                         }
@@ -107,6 +110,9 @@ namespace UnityTemplateProjects
                             a.shotCD = 1.5f;
                             GameObject bulletHoleObject = Instantiate(bulletHole, hitData.point, Quaternion.Euler(new Vector3(90, 0, 0)));
                             bulletHoleObject.transform.parent = a.transform;
+                            
+                            if (GameManager.instance != null)
+                                GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, 1);
                         }
                         else Miss();
                     }
@@ -146,6 +152,8 @@ namespace UnityTemplateProjects
         public void Miss()
         {
             accuracy *= 0.9f;
+            if (GameManager.instance != null)
+                GameManager.instance.ScorePoints(GameManager.games.AIMTRAIN, -1);
         }
     }
 }
