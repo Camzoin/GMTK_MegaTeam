@@ -39,6 +39,9 @@ public class EnemySumo : MonoBehaviour
 
         //give player points
 
+        GameManager.instance.ScorePoints(GameManager.games.SUMO, 1);
+
+
         //smash bros VFX
 
         Instantiate(smashExplosion, transform.position, Quaternion.identity);
