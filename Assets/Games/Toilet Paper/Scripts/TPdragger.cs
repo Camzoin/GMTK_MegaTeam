@@ -25,12 +25,23 @@ public class TPdragger : MonoBehaviour
 
     float oldUnrollAmount;
 
+    float floorTPHeight;
+
+    public GameObject floorTP;
+
     private void Update()
     {
         tp.material.mainTextureOffset = new Vector2(0, unrollAmount * unrollVisMulti);
         tpRoll.material.mainTextureOffset = new Vector2(0, unrollAmount * unrollVisMulti);
         tpCenter.materials[2].mainTextureOffset = new Vector2(unrollAmount * unrollVisMulti * 0.25f, 0);
 
+        if (floorTPHeight < 0.6f)
+        {
+            floorTPHeight = unrollAmount * 0.00001f;
+        }
+
+
+        floorTP.transform.position = new Vector3(0, floorTPHeight, 0);
 
         newPoints = unrollAmount - oldUnrollAmount;
 
