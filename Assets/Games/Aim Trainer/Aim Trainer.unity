@@ -1340,6 +1340,8 @@ MonoBehaviour:
   fireRate: 0.1
   accuracy: 1
   mainCamera: {fileID: 454087601}
+  bulletHole: {fileID: 7762713017417246453, guid: 60da32c7be4f8f844b6f823f4d779a66,
+    type: 3}
 --- !u!114 &454087604
 MonoBehaviour:
   m_ObjectHideFlags: 0
