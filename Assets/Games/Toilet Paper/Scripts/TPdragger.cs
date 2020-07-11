@@ -9,7 +9,7 @@ using UnityEngine;
 public class TPdragger : MonoBehaviour
 
 {
-    public Renderer tp;
+    public Renderer tp, tpRoll, tpCenter;
 
     private Vector3 mOffset;
 
@@ -24,13 +24,23 @@ public class TPdragger : MonoBehaviour
     private void Update()
     {
         tp.material.mainTextureOffset = new Vector2(0, unrollAmount * unrollVisMulti);
-            
+        tpRoll.material.mainTextureOffset = new Vector2(0, unrollAmount * unrollVisMulti);
+        tpCenter.materials[2].mainTextureOffset = new Vector2(unrollAmount * unrollVisMulti * 0.25f, 0);
+
+
+        float oldUnrollAmount = unrollAmount;
+
+        float newPoints = unrollAmount - oldUnrollAmount;
 
         oldMousePos = mousePos;
 
         mousePos = Input.mousePosition;
 
-        
+        //score = unrollAmount * unrollVisMulti
+
+        //adding points. I think this will work
+
+        //GameManager.instance.ScorePoints(GameManager.games.TOILET, newPoints);
     }
 
 
@@ -40,9 +50,6 @@ public class TPdragger : MonoBehaviour
         {
             unrollAmount = unrollAmount + (oldMousePos.y - mousePos.y);
         }
-
-
-
     }
 
 }
