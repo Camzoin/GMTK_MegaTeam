@@ -1,6 +1,7 @@
-﻿Add the GameManager prefab to your game scene for testing.
-
-You can change the vlues to whatever you want it will be deleted at runtime for the main game when run from the menu.
+﻿☺☺☺
+You can a copy of the GameManager prefab to your scene,
+it will be deleted at runtime for the main game when run from the menu.
+☺☺☺
 
 The GameManager will handle the pause menu and will display the player's global score on the pause menu.
 
@@ -9,7 +10,6 @@ CODE:
 	GameManager gm;
 
 	On Awake do this:
-	~~~gm = GameObject.Find("GameManager").GetComponent<GameManager>();~~~
 	gm = GameManager.instance;
 
 	Whenever you want to score points do this:
@@ -17,6 +17,11 @@ CODE:
 
 	If your game has a fail-state and needs to be reloaded do this (please don't use SceneManagment):
 	RestartThisGame();
+
+	If you need to know the score from your game or the global score:
+	GetTotalScore() //Global score
+
+	public float GetScore(games game) //Score for a specific game (0 if none).
 
 	Game Enum Names listed in spreadsheet and here:
 	LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE
@@ -46,6 +51,5 @@ CODE:
 		games.TOILET, 23
 		games.WHACKAMOLE, 24
 		games.SIMPLE, 25
-
 
 Let Alex know if any of this is dumb or doesn't make sense. ♥

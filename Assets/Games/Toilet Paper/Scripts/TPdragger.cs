@@ -21,6 +21,10 @@ public class TPdragger : MonoBehaviour
 
     public float unrollVisMulti = 0.1f;
 
+    float newPoints;
+
+    float oldUnrollAmount;
+
     private void Update()
     {
         tp.material.mainTextureOffset = new Vector2(0, unrollAmount * unrollVisMulti);
@@ -28,9 +32,9 @@ public class TPdragger : MonoBehaviour
         tpCenter.materials[2].mainTextureOffset = new Vector2(unrollAmount * unrollVisMulti * 0.25f, 0);
 
 
-        float oldUnrollAmount = unrollAmount;
+        newPoints = unrollAmount - oldUnrollAmount;
 
-        float newPoints = unrollAmount - oldUnrollAmount;
+        oldUnrollAmount = unrollAmount;
 
         oldMousePos = mousePos;
 
@@ -40,7 +44,7 @@ public class TPdragger : MonoBehaviour
 
         //adding points. I think this will work
 
-        //GameManager.instance.ScorePoints(GameManager.games.TOILET, newPoints);
+        GameManager.instance.ScorePoints(GameManager.games.TOILET, newPoints * unrollVisMulti);
     }
 
 
