@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		startTime = Time.time;
+
+		Cursor.visible = false;
     }
 
     // Update is called once per frame
