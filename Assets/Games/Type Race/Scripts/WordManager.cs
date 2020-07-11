@@ -101,10 +101,10 @@ public class WordManager : MonoBehaviour
     {
         float timer = 0;
 
-        while (timer < duration)
+        while (timer <= 1)
         {
-            timer += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(start, end, timer);
+            timer += Time.deltaTime / duration;
+            float newAlpha = Mathf.Lerp(start, end, Mathf.SmoothStep(0, 1, timer));
             textMesh.color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
             yield return null;
         }
