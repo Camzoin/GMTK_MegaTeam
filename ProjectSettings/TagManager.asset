@@ -8,6 +8,7 @@ TagManager:
   - Mole
   - Bomb
   - PongBall
+  - Bumper
   layers:
   - Default
   - TransparentFX
