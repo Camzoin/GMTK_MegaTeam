@@ -19,6 +19,8 @@ public class CardMatchManager : MonoBehaviour
 
     private Vector3 mPos;
 
+    private Card selectedCard, lastSelectedCard;
+
     public void Start()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -30,18 +32,17 @@ public class CardMatchManager : MonoBehaviour
         mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
         Vector3 v = new Vector3(mPos.x, mPos.y, mPos.z);
 
-        Debug.DrawRay(v, cam.ScreenPointToRay(Input.mousePosition).direction * 10);
-
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(mPos + " " + v);
 
             if (Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction * 10), out RaycastHit hitInfo))
             {
                 Card card = hitInfo.collider.GetComponentInParent<Card>();
                 if (card)
                 {
+                    SelectCard(card);
                     StartCoroutine(FlipCard(card, 0.15f));
+                    
                 }
             }
         }
@@ -121,5 +122,16 @@ public class CardMatchManager : MonoBehaviour
             g.transform.localScale = new Vector3(i / flipDuration, 1, 1);
             yield return null;
         }
+    }
+
+    public void SelectCard(Card card)
+    {
+        lastSelectedCard = selectedCard != null ? selectedCard : null;
+        selectedCard = card;
+    }
+
+    public bool EvaluateCards(Card c0, Card c1)
+    {
+        return c0.cardType == c1.cardType ? true : false;
     }
 }
