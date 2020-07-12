@@ -11,6 +11,8 @@ public class WordManager : MonoBehaviour
     public TMP_InputField inputField;
     public Transform dynamicCanvas;
     public Transform currentWordCanvas;
+    public AudioClip[] breakSounds;
+    AudioSource breakSoundSource;
     [Header("Prefabs")]
     public GameObject WordPrefab;
     public GameObject spawnEffect;
@@ -23,7 +25,6 @@ public class WordManager : MonoBehaviour
     string[] wordPool;
     int[] wordIndices;
     public string currentWord;
-
     TextMeshProUGUI previousWord;
 
     public delegate void EventHandler();
@@ -38,6 +39,8 @@ public class WordManager : MonoBehaviour
         {
             instance = this;
         }
+
+        breakSoundSource = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -75,6 +78,8 @@ public class WordManager : MonoBehaviour
             if (inputField.text == currentWord)
             {
                 Instantiate(explosionEffect, wordList[0].transform.position, explosionEffect.transform.rotation);
+                breakSoundSource.PlayOneShot(breakSounds[Random.Range(0, breakSounds.Length)]);
+
                 Destroy(wordList[0].gameObject);
                 wordList.RemoveAt(0);
                 wordList.Add(SpawnWord(wordPool[wordsToUse[0]]));
@@ -105,7 +110,7 @@ public class WordManager : MonoBehaviour
         {
             timer += Time.deltaTime / duration;
             float newAlpha = Mathf.Lerp(start, end, Mathf.SmoothStep(0, 1, timer));
-            textMesh.color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
+            textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, newAlpha);
             yield return null;
         }
     }
@@ -116,7 +121,8 @@ public class WordManager : MonoBehaviour
         {
             float start = wordList[i].color.a;
             float newAlpha = 1.0f - i / (float)wordList.Count;
-            wordList[i].color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
+            //wordList[i].color = new Color(textColor.r, textColor.g, textColor.b, newAlpha);
+            StartCoroutine(FadeIn(wordList[i], wordList[i].color.a, newAlpha, 1));
         }
     }
 
