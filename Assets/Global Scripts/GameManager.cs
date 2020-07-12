@@ -88,8 +88,8 @@ public class GameManager : MonoBehaviour
 	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG, games.PONG, games.CARDFLIP, games.HIDEBRIDGE, games.SPOTLIGHT };
 
 	private List<games> gamesQueue = new List<games>();
-	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
-	private List<float> gamesDurration = new List<float> { 10, 10, 10 };
+	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	//private List<float> gamesDurration = new List<float> { 10, 10, 10 };
 	private int currentGame = -1;
 
 	private float score = 0f;
