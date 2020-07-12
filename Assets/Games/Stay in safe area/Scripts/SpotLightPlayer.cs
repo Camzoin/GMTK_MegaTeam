@@ -26,12 +26,16 @@ public class SpotLightPlayer : MonoBehaviour
 
     float gainScoreTime, loseScoreTime;
 
+    public List<GameObject> environments;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
+
+        environments[Random.Range(0, 2)].SetActive(true);
     }
 
     // Update is called once per frame
