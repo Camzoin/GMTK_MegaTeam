@@ -41,6 +41,8 @@ public class BridgePlayer : MonoBehaviour
 
     public Transform playerSpawn;
 
+    public GameObject coinPickUp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -157,7 +159,7 @@ public class BridgePlayer : MonoBehaviour
         }
         if (other.name == "Kill Box")
         {
-            GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, -2);
+            //GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, -2);
 
             gameObject.transform.position = playerSpawn.position;
             gameObject.transform.rotation = playerSpawn.rotation;
@@ -170,7 +172,13 @@ public class BridgePlayer : MonoBehaviour
         }
         if(other.name == "Coin")
         {
-            GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, 1);
+            Debug.Log("llololool");
+
+            Instantiate(coinPickUp, other.transform.position, other.transform.rotation);
+
+            Destroy(other.transform.root.gameObject);
+
+            //GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, 1);
         }
     }
 }
