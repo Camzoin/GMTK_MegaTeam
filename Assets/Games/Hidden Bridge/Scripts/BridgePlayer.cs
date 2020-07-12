@@ -151,12 +151,14 @@ public class BridgePlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name != "Kill Box" || other.name != "Coin")
+        if (other.name != "Kill Box" && other.name != "Coin")
         {
             curCam = Convert.ToInt32(other.gameObject.name);
         }
         if (other.name == "Kill Box")
         {
+            GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, -2);
+
             gameObject.transform.position = playerSpawn.position;
             gameObject.transform.rotation = playerSpawn.rotation;
 
@@ -165,6 +167,10 @@ public class BridgePlayer : MonoBehaviour
             cameraTrans.rotation = camPoints[10].rotation;
 
             curCam = 11;
+        }
+        if(other.name == "Coin")
+        {
+            GameManager.instance.ScorePoints(GameManager.games.HIDEBRIDGE, 1);
         }
     }
 }
