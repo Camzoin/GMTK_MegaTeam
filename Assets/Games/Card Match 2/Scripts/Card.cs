@@ -16,6 +16,8 @@ public class Card : MonoBehaviour
 
     public Sprite[] sprites = new Sprite[2];
 
+    public int spriteIndex = 0;
+
     public Card(CardType cardType, Sprite sprite)
     {
         this.cardType = cardType;

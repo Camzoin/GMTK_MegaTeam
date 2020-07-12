@@ -48,6 +48,8 @@ public class MahjongManager : MonoBehaviour
 
     public void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         NewGame();
     }
 
