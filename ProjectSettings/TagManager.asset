@@ -7,6 +7,7 @@ TagManager:
   - Hole
   - Mole
   - Bomb
+  - PongBall
   layers:
   - Default
   - TransparentFX
