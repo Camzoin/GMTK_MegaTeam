@@ -87,7 +87,7 @@ public class MahjongManager : MonoBehaviour
 
     public void NewGame() //Starts a new game
     {
-        int[,] rawGameState = LoadBoardState(files[0].text);
+        int[,] rawGameState = LoadBoardState(files[UnityEngine.Random.Range(0, files.Count)].text);
         PopulatePieceBuffer();
         boardState = new List<MahjongPiece>[boardSize, boardSize];
         SetPieces(rawGameState);
@@ -131,12 +131,15 @@ public class MahjongManager : MonoBehaviour
     public void PopulatePieceBuffer() //Instantiates objects into pieceBuffer
     {
         var pieces = new List<MahjongPiece>();
+
+        int rand = UnityEngine.Random.Range(0, 10);
+
         for (int i = 0; i < totalPieces; i++)
         {
 
-            PieceColor[] pieceColors = GenerateNewColors(i);
+           PieceColor[] pieceColors = GenerateNewColors(i + rand);
 
-            MahjongPiece tPiece = new MahjongPiece(pieceColors, Instantiate(piecePrefabs[i % 10]));
+            MahjongPiece tPiece = new MahjongPiece(pieceColors, Instantiate(piecePrefabs[(i + rand) % 10]));
             tPiece.piece.GetComponent<MahjongTile>().mahjongPiece = tPiece;
             pieces.Add(tPiece);
             //TODO Instantiate asynchronsly?
