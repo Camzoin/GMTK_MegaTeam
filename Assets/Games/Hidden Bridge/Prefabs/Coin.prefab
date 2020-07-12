@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6782834346151679777}
   - component: {fileID: 417820503373837815}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
