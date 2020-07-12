@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -543,6 +543,19 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 847334543}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &939964585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939964582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 1, z: 0}
+  m_Center: {x: -0.0000000037252903, y: -0.2505139, z: 0.10135651}
 --- !u!114 &939964586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,20 +574,6 @@ MonoBehaviour:
   unrollAmount: 0
   unrollVisMulti: 0.002
   floorTP: {fileID: 474777274}
---- !u!64 &939964587
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939964582}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -770189285975123587, guid: 3980f03bd7c288544822a9c6da9dc9c5, type: 3}
 --- !u!1001 &1038269240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -691,6 +690,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653370122467153609, guid: 8e544cf3a8d0b7141800fe52d357c7e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4774606003933912601, guid: 8e544cf3a8d0b7141800fe52d357c7e6,
         type: 3}
