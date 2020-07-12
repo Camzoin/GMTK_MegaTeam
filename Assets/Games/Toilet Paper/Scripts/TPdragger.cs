@@ -43,7 +43,7 @@ public class TPdragger : MonoBehaviour
 
         if (floorTPHeight < 0.6f)
         {
-            floorTPHeight = unrollAmount * 0.0005f;
+            floorTPHeight = unrollAmount * 0.00002f;
         }
 
 

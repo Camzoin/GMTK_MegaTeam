@@ -18,6 +18,8 @@ public class PlayerSumo : MonoBehaviour
 
     float time = 0.5f, spawnTime = 1;
 
+    public AudioSource CLANK;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,5 +59,10 @@ public class PlayerSumo : MonoBehaviour
         rb.velocity = new Vector3(0, 0, 0);
 
         time = 0;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        CLANK.Play();
     }
 }

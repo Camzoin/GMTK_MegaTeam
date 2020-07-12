@@ -12,6 +12,8 @@ public class EnemySumo : MonoBehaviour
 
     float time = 0.5f, spawnTime = 1;
 
+    public AudioSource CLANK;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,5 +48,10 @@ public class EnemySumo : MonoBehaviour
         CameraShake.instance.Shake(0.2f);
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        CLANK.Play();
     }
 }
