@@ -35,6 +35,7 @@ public class TPdragger : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
