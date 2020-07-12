@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MahjongManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class MahjongManager : MonoBehaviour
             this.piece = piece;
         }
     }
+
+    public AudioSource audioSource;
 
     public List<GameObject> piecePrefabs;
 
@@ -50,6 +53,7 @@ public class MahjongManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        audioSource = GetComponent<AudioSource>();
         NewGame();
     }
 
@@ -408,7 +412,8 @@ public class MahjongManager : MonoBehaviour
     {
         piece.piece.GetComponent<Animator>().SetTrigger("pop");
         piece.piece.GetComponent<Collider>().enabled = false;
-        for(float t = 0; t < timeToDestroy; t+= Time.deltaTime)
+        audioSource.Play();
+        for (float t = 0; t < timeToDestroy; t+= Time.deltaTime)
         {
             yield return null;
         }
