@@ -33,6 +33,11 @@ public class TPdragger : MonoBehaviour
 
     float time, mercyTimer = 0.1f;
 
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
+
     private void Update()
     {
         time = time + Time.deltaTime;
