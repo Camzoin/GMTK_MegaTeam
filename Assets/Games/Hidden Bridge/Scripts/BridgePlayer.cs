@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpotLightPlayer : MonoBehaviour
+public class BridgePlayer : MonoBehaviour
 {
     Vector3 x, z;
 
@@ -13,8 +13,6 @@ public class SpotLightPlayer : MonoBehaviour
     public Transform forward;
 
     Vector3 realMovement;
-
-    bool isSafe = true;
 
     bool isMoving = false;
 
@@ -33,6 +31,10 @@ public class SpotLightPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //shdader
+        Shader.SetGlobalVector("_PlayerPos", transform.position);
+
+
         x = forward.transform.right * Input.GetAxisRaw("Horizontal");
         z = forward.transform.forward * Input.GetAxisRaw("Vertical");
 
@@ -54,16 +56,6 @@ public class SpotLightPlayer : MonoBehaviour
 
         oldPos = transform.position;
 
-        //score
-        if (isSafe == true)
-        {
-            //add
-        }
-        else
-        {
-            //subtract
-        }
-
         //anim stuff
         anim.SetBool("isWalking", isMoving);
     }
@@ -75,15 +67,5 @@ public class SpotLightPlayer : MonoBehaviour
         realMovement = Vector3.Lerp(realMovement, movement, 10 * Time.deltaTime);
 
         rb.velocity = realMovement;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        isSafe = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        isSafe = false;
     }
 }
