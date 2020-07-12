@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 	private GameObject pauseMenu;
 	private bool isPause = false;
 
+	public GameObject timer;
+
 	private GameObject sceneChangerObj;
 	private SceneChanger sc;
 
@@ -58,12 +60,12 @@ public class GameManager : MonoBehaviour
 	public Dictionary<games, string> popInText = new Dictionary<games, string>
 	{
 		{ games.LIMBO, "" },
-		{ games.HIDEBRIDGE, "" },
+		{ games.HIDEBRIDGE, "Don't fall!" },
 		{ games.JUMPKING, "Jump!" },
 		{ games.RUNNER, "" },
 		{ games.OVERIT, "" },
 		{ games.DHUNT, "Shoot bird!" },
-		{ games.PONG, "" },
+		{ games.PONG, "Ping!" },
 		{ games.STROOP, "Pick the color of the word!" },
 		{ games.AIMTRAIN, "Shoot!" },
 		{ games.TARGETS, "" },
@@ -342,6 +344,7 @@ public class GameManager : MonoBehaviour
 			ShowCorrectMenuStuff();
 			sessionActive = false;
 			needToShowMenuUI = true;
+			timer.SetActive(false);
 		}
 		else
 		{
@@ -357,6 +360,7 @@ public class GameManager : MonoBehaviour
 			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
 			thisGameStartTime = Time.time;
+			timer.SetActive(true);
 		}
 	}
 

@@ -46,9 +46,6 @@ public class SceneChanger : MonoBehaviour
                 fadingOut = false;
                 fadingIn = true;
                 SceneManager.LoadScene(nextScene);
-
-
-
             }
         }
 
