@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6027867894011310622}
   - component: {fileID: 4474110561800844882}
   - component: {fileID: 646129677232756422}
+  - component: {fileID: 4829842690592969}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -98,3 +99,16 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 9858b711043572d43a31c5e5d08027a8, type: 3}
   - {fileID: 0}
+--- !u!65 &4829842690592969
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226379123954523197}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
