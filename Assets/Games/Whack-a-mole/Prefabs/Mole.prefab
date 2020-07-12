@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPopTime: 0.5
   maxPopTime: 4
-  minTimeBetweenPops: 0.8
+  minTimeBetweenPops: 1.6
   maxTimeBetweenPops: 8
   bombPercentage: 0.8
   mole: {fileID: 4278092265991435647}
@@ -188,6 +188,7 @@ MonoBehaviour:
   whackSound: {fileID: 6010093951582884545}
   wahSound: {fileID: 4054858400756954443}
   boomSound: {fileID: 9050087951679940118}
+  anim: {fileID: 8883207524676438685}
 --- !u!136 &4394747704669038154
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -716,6 +717,12 @@ GameObject:
 --- !u!4 &3464682718849380293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9130170763607618631, guid: d643aab1c4a755740a31f0347e47d8b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5666064330048576386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8883207524676438685 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -5339411733462904545, guid: d643aab1c4a755740a31f0347e47d8b1,
     type: 3}
   m_PrefabInstance: {fileID: 5666064330048576386}
   m_PrefabAsset: {fileID: 0}
