@@ -14,6 +14,8 @@ public class StroopGame : MonoBehaviour
     int colorInt;
     int wordInt;
     public AudioSource goodBeep, badBeep;
+    public List<GameObject> buttons;
+    public GameObject buttonHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,11 @@ public class StroopGame : MonoBehaviour
 
         curWordObj = Instantiate(words[wordInt], wordHolder);
         curWordObj.GetComponent<Renderer>().material.color = colors[colorInt];
+
+        //foreach (GameObject button in buttons)
+        //{
+        //    Instantiate<GameObject>(button, buttonHolder.transform);
+        //}
     }
 
     // Update is called once per frame
