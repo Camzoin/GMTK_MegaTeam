@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
     path: Assets/Users/Justice/Justice_Testing.unity
     guid: a1a0352438bdec54c8b00d8807895e39
   - enabled: 0
