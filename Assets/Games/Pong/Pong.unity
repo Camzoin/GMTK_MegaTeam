@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 920407149}
   m_Layer: 0
   m_Name: Bumper1
-  m_TagString: Untagged
+  m_TagString: Bumper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 1211784458}
   m_Layer: 0
   m_Name: Bumper2
-  m_TagString: Untagged
+  m_TagString: Bumper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -812,8 +812,8 @@ MonoBehaviour:
     type: 3}
   right: {fileID: 1544246145}
   left: {fileID: 627742933}
-  moveSpeed: 10
-  maxSpeed: 30
+  moveSpeed: 15
+  maxSpeed: 40
   xBounds: 9.5
 --- !u!58 &1294058649
 CircleCollider2D:

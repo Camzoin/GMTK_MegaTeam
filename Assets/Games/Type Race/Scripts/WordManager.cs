@@ -52,7 +52,7 @@ public class WordManager : MonoBehaviour
         RemoveNewLineChars();
         wordIndices = GenerateIndexArray(wordPool.Length);
         ShuffleArray(wordIndices, wordIndices.Length);
-        wordsToUse = SplitArray(wordIndices, 500);
+        wordsToUse = SplitArray(wordIndices, wordIndices.Length);
 
         currentWord = wordPool[wordsToUse[0]];
 

@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        float angle = Random.Range(30, 150) + Random.Range(0, 2) * 180;
+        float angle = Random.Range(30, 60) + Random.Range(0,1) * 180;
         float radAngle = angle * Mathf.Deg2Rad;
         Vector2 moveVec = new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle));
 
@@ -60,7 +60,10 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.AddForce(Random.insideUnitCircle.normalized * 3, ForceMode2D.Impulse);
+        if (collision.collider.CompareTag("Bumper"))
+        {
+            rb.AddForce(Random.insideUnitCircle.normalized * 3, ForceMode2D.Impulse);
+        }
         CameraShake.instance.Shake(0.1f);
         Instantiate(bounceEffect, transform.position, Quaternion.identity);
     }
