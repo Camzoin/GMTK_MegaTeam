@@ -151,7 +151,7 @@ public class BridgePlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name != "Kill Box")
+        if (other.name != "Kill Box" || other.name != "Coin")
         {
             curCam = Convert.ToInt32(other.gameObject.name);
         }
