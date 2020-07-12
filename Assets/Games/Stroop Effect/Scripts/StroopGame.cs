@@ -20,6 +20,7 @@ public class StroopGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
         wordInt = Random.Range(0, 6);
         colorInt = Random.Range(0, 6);
 
