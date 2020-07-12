@@ -8,7 +8,7 @@ public class MahjongManager : MonoBehaviour
 {
     public enum PieceColor { blue, green, red, yellow }
 
-    public struct MahjongPiece
+    public class MahjongPiece
     {
         public PieceColor[] pieceColor;
         public GameObject piece;
@@ -26,6 +26,8 @@ public class MahjongManager : MonoBehaviour
 
     public const int boardSize = 5;
 
+    public Camera cam;
+
     public Vector3 pieceDimensions;
 
     public List<TextAsset> files;
@@ -37,9 +39,36 @@ public class MahjongManager : MonoBehaviour
 
     private Queue<MahjongPiece> pieceBuffer;
 
+    private Vector3 mPos, lastMPos;
+
     public void Start()
     {
         NewGame();
+    }
+
+    public void Update()
+    {
+        mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
+        Vector3 v = new Vector3();
+
+        if (lastMPos != mPos)
+        {
+            lastMPos = mPos;
+            v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            MahjongPiece piece = FindMahjongPieceOnTop(v, cam.ScreenPointToRay(Input.mousePosition).direction, 100);
+
+            if (piece != null)
+            {
+                var mats = piece.piece.GetComponent<MeshRenderer>().materials;
+                mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
+                mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
+            }
+        }
+
     }
 
     public void NewGame() //Starts a new game
@@ -163,5 +192,52 @@ public class MahjongManager : MonoBehaviour
         boardState[x, y].RemoveAt(boardState.Length);
         //TODO Assign points
         return true;
+    }
+
+    public MahjongPiece FindMahjongPieceOnTop(Vector3 pos, Vector3 dir, int maxIterations)
+    {
+        Ray ray = new Ray(pos, dir);
+        List<MahjongPiece> stack = FindNearestStack(new Vector2(pos.x, pos.z));
+        if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
+        {
+            Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
+
+            return stack[stack.Count - 1];
+        }
+
+        for (int i = 0; i < maxIterations; i++)
+        {
+            ray.origin += dir * 1 / 3;
+
+            stack = FindNearestStack(new Vector2(ray.origin.x, ray.origin.z));
+            if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
+            {
+                Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
+                return stack[stack.Count - 1];
+            }
+        }
+
+        Console.WriteLine("No piece found");
+        return null;
+    }
+
+    public List<MahjongPiece> FindNearestStack(Vector2 pos) //Finds the bottom bottom piece of the nearest stack
+    {
+        List<MahjongPiece> returnStack = boardState[0,0];
+
+        foreach (List<MahjongPiece> l in boardState)
+        {
+            if(l.Count <= 0) continue;
+
+            Vector2 currStackPos = new Vector2(l[0].piece.transform.position.x, l[0].piece.transform.position.z);
+
+            Vector2 currStackAdjPos = new Vector2(l[0].piece.transform.position.x + pieceDimensions.x / 2, l[0].piece.transform.position.z + pieceDimensions.z / 2);
+            Vector2 returnStackAdjPos = new Vector2(returnStack[0].piece.transform.position.x + pieceDimensions.x / 2, returnStack[0].piece.transform.position.z + pieceDimensions.z / 2);
+            if (Vector2.Distance(pos, returnStackAdjPos) > Vector2.Distance(pos, currStackAdjPos))
+            {
+                returnStack = l;
+            }
+        }
+        return returnStack;
     }
 }
