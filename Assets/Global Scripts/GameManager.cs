@@ -52,22 +52,77 @@ public class GameManager : MonoBehaviour
 		{ games.SIMPLE, 25 }
 	};
 
-	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP};
+	public Dictionary<games, string> popInText = new Dictionary<games, string>
+	{
+		{ games.LIMBO, "" },
+		{ games.HIDEBRIDGE, "" },
+		{ games.JUMPKING, "" },
+		{ games.RUNNER, "" },
+		{ games.OVERIT, "" },
+		{ games.DHUNT, "Shoot bird!" },
+		{ games.PONG, "" },
+		{ games.STROOP, "" },
+		{ games.AIMTRAIN, "" },
+		{ games.TARGETS, "" },
+		{ games.TANGLE, "" },
+		{ games.TREADMILL, "" },
+		{ games.WELL, "Get water!" },
+		{ games.CARDFLIP, "Match two!" },
+		{ games.UNDERTREE, "" },
+		{ games.MAHJONG, "" },
+		{ games.PACMAN, "" },
+		{ games.COOKIE, "" },
+		{ games.SPOTLIGHT, "" },
+		{ games.TYPERACE, "Type!" },
+		{ games.SUMO, "" },
+		{ games.OSU, "Click the circles!" },
+		{ games.TOILET, "Unroll!" },
+		{ games.WHACKAMOLE, "Move hammer smash mole!" },
+		{ games.SIMPLE, "" }
+	};
+
+	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG};
 
 	private List<games> gamesQueue = new List<games>();
-	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	private List<float> gamesDurration = new List<float> { 5, 5, 5, 5, 5, 5 };
 	private int currentGame = -1;
 
 	private float score = 0f;
 	private Dictionary<games, float> scorePerGame = new Dictionary<games, float>();
+
+	private List<Dictionary<string, object>> scoreBoard;
+
+	private bool scoreSubmitted = false;
 
 	private float startTime;
 	private float thisGameStartTime;
 
 	private void OnEnable()
 	{
-		//Cursor.visible = true;
-		//Cursor.lockState = CursorLockMode.None;
+		//If we're on the menu scene.
+		if (SceneManager.GetActiveScene().buildIndex == 0)
+		{
+			GameObject startMenu = GameObject.Find("Start Menu");
+			GameObject endMenu = GameObject.Find("End Menu");
+
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+			if (gamesQueue.Count == 0)
+			{
+				//Main menu
+				startMenu.SetActive(true);
+				endMenu.SetActive(false);
+			}
+			else
+			{
+				//end screen
+				startMenu.SetActive(false);
+				endMenu.SetActive(true);
+				DownloadScores();
+			}
+		}
+
 	}
 
 	private void Awake()
@@ -179,6 +234,7 @@ public class GameManager : MonoBehaviour
 		score = 0f;
 		scorePerGame = new Dictionary<games, float>();
 		startTime = Time.time;
+		scoreSubmitted = false;
 
 		//generate game queue
 		for (int i = 0; i < gamesDurration.Count; i++)
@@ -219,13 +275,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//private void UploadScore(string name, float score, List<games> gameList)
-	private void UploadScore()
+	public void SubmitScore()
 	{
-		string name = "AXZ";
-		float score = 320541f;
-		List<games> gameList = new List<games> { games.WHACKAMOLE, games.TOILET, games.TARGETS};
+		//Only allows 1 submission per session. (Gets reset when new session is started.)
+		if (!scoreSubmitted)
+		{
+			scoreSubmitted = true;
+			//Needs to get the name entered and reject if not alphanumeric.
+			UploadScore("TTT", score, gamesQueue);
+		}
+	}
 
+	private void UploadScore(string name, float score, List<games> gameList)
+	{
 		string uniqueID = name + UnityEngine.Random.Range((int)0, (int)10000) + "-" + UnityEngine.Random.Range((int)0, (int)10000);
 
 		//Get the object used to communicate with the server.
@@ -274,9 +336,35 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void DownloadScores()
+	public void DownloadScores()
 	{
+		WebClient request = new WebClient();
+		string url = "http://35.163.108.180/ScoreBoard.csv";
+		//request.Credentials = new NetworkCredential("anonymous", "anonymous@example.com");
 
+		try
+		{
+			byte[] newFileData = request.DownloadData(url);
+			string fileString = System.Text.Encoding.UTF8.GetString(newFileData);
+			scoreBoard = CSVReader.Read(fileString);
+
+			DisplayScores();
+		}
+		catch (WebException e)
+		{
+			Debug.Log(e.ToString());
+		}
+	}
+
+	public void DisplayScores()
+	{
+		foreach (Dictionary<string, object> record in scoreBoard)
+		{
+			foreach (string key in record.Keys)
+			{
+				Debug.Log(key + ": " + record[key]);
+			}
+		}
 	}
 
     private IEnumerator DelayEnable(GameObject gameObject, float delay, bool enabled)
