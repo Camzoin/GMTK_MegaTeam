@@ -49,8 +49,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Pattern1: 1
-    - Pattern2: 0
+    - Pattern1: 0
+    - Pattern2: 1
     - Pattern3: 0
     - Pattern4: 0
     - Rotation: 45
