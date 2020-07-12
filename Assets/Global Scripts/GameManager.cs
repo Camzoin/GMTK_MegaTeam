@@ -201,6 +201,16 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public float GetRemainingTime()
+	{
+		return Time.time - thisGameStartTime - gamesDurration[currentGame];
+	}
+
+	public int GetRemainingGames()
+	{
+		return gamesQueue.Count - (currentGame + 1);
+	}
+
 	public float GetTotalScore()
 	{
 		return score;
