@@ -22,10 +22,10 @@ public class MenuController : MonoBehaviour
 	{
 		if (SceneManager.GetActiveScene().buildIndex == 26)
 		{
-			if (Input.GetKeyDown(KeyCode.A))
+			if (Input.GetKeyDown(KeyCode.D))
 			{
 				//move left
-				if (curLetter != 0)
+				if (curLetter > 0)
 				{
 					curLetter--;
 				}
@@ -34,6 +34,7 @@ public class MenuController : MonoBehaviour
 					curLetter = 2;
 				}
 
+				SetCorrectColor();
 			}
 			else if (Input.GetKeyDown(KeyCode.S))
 			{
@@ -54,19 +55,19 @@ public class MenuController : MonoBehaviour
 
 				int curLetterIndex = allChars.IndexOf(curObj.text[0]);
 
-				if (curLetterIndex < allChars.Count)
+				if (curLetterIndex > 0)
 				{
 					curObj.text = "" + allChars[curLetterIndex - 1];
 				}
 				else
 				{
-					curObj.text = "" + allChars[0];
+					curObj.text = "" + allChars[allChars.Count - 1];
 				}
 			}
-			else if (Input.GetKeyDown(KeyCode.D))
+			else if (Input.GetKeyDown(KeyCode.A))
 			{
 				//move right
-				if (curLetter != 2)
+				if (curLetter < 2)
 				{
 					curLetter++;
 				}
@@ -74,6 +75,8 @@ public class MenuController : MonoBehaviour
 				{
 					curLetter = 0;
 				}
+
+				SetCorrectColor();
 			}
 			else if (Input.GetKeyDown(KeyCode.W))
 			{
@@ -94,15 +97,35 @@ public class MenuController : MonoBehaviour
 
 				int curLetterIndex = allChars.IndexOf(curObj.text[0]);
 
-				if (curLetterIndex > 0)
+				if (curLetterIndex < allChars.Count - 1)
 				{
 					curObj.text = "" + allChars[curLetterIndex + 1];
 				}
 				else
 				{
-					curObj.text = "" + allChars[allChars.Count - 1];
+					curObj.text = "" + allChars[0];
 				}
 			}
+		}
+	}
+
+	public void SetCorrectColor()
+	{
+		init1.GetComponent<Text>().color = Color.white;
+		init2.GetComponent<Text>().color = Color.white;
+		init3.GetComponent<Text>().color = Color.white;
+
+		if (curLetter == 0)
+		{
+			init1.GetComponent<Text>().color = Color.green;
+		}
+		else if (curLetter == 1)
+		{
+			init2.GetComponent<Text>().color = Color.green;
+		}
+		else if (curLetter == 2)
+		{
+			init3.GetComponent<Text>().color = Color.green;
 		}
 	}
 
