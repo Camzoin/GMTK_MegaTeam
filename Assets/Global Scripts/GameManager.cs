@@ -104,7 +104,8 @@ public class GameManager : MonoBehaviour
 
 	private bool needToShowMenuUI = false;
 
-	private UnityEngine.UI.Button.ButtonClickedEvent dlScoresButtonEvent;
+	private CursorLockMode cursorLockModeBeforePause = CursorLockMode.None;
+	private bool cursorEnableStateBeforePause = true;
 
 	private void Awake()
 	{
@@ -154,7 +155,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab))
 			{
 				if (!isPause)
 				{
@@ -163,14 +164,25 @@ public class GameManager : MonoBehaviour
 					//Exit - Close Game
 					//Volume - Mute/Unmute & Slider
 					//Display Score
+					Time.timeScale = 0f;
 					isPause = true;
 					pauseMenu.SetActive(true);
 					globalScoreText.text = "" + score;
+
+					cursorLockModeBeforePause = Cursor.lockState;
+					cursorEnableStateBeforePause = Cursor.visible;
+
+					Cursor.visible = true;
+					Cursor.lockState = CursorLockMode.None;
 				}
 				else
 				{
+					Time.timeScale = 1f;
 					isPause = false;
 					pauseMenu.SetActive(false);
+
+					Cursor.lockState = cursorLockModeBeforePause;
+					Cursor.visible = cursorEnableStateBeforePause;
 				}
 			}
 		}
@@ -261,10 +273,18 @@ public class GameManager : MonoBehaviour
 
 	public void AbandonRun()
 	{
+		Time.timeScale = 1f;
+		isPause = false;
+		pauseMenu.SetActive(false);
+
+		cursorLockModeBeforePause = CursorLockMode.None;
+		cursorEnableStateBeforePause = true;
+
 		sessionActive = false;
 		needToShowMenuUI = true;
 		gamesQueue = new List<games>();
-		sc.ChangeScene(0);
+		//sc.ChangeScene(0);
+		SceneManager.LoadScene(0);
 	}
 
 	public void StartNewSession()
@@ -358,6 +378,7 @@ public class GameManager : MonoBehaviour
 
 		//Generate location string.
 		string externalip = new WebClient().DownloadString("http://icanhazip.com");
+		Debug.Log("ip: " + externalip);
 		string locString = CityStateCountByIp(externalip);
 
 		string dataString = name + "," + System.DateTime.UtcNow + "," + score.ToString() + "," + gamesListString + "," + locString;
@@ -410,10 +431,8 @@ public class GameManager : MonoBehaviour
 	{
 		foreach (Dictionary<string, object> record in scoreBoard)
 		{
-			foreach (string key in record.Keys)
-			{
-				Debug.Log(key + ": " + record[key]);
-			}
+			//['player_name', 'time_stamp', 'score', 'games', 'location']
+			Debug.Log("Player Name: " + record["player_name"] + " Time: " + record["time_stamp"] + " Score: " + record["score"] + " Games: " + record["games"].ToString().Trim('\'').Replace("|", ", ") + " Location: " + record["location"]);
 		}
 	}
 
@@ -431,23 +450,57 @@ public class GameManager : MonoBehaviour
 
 	public static string CityStateCountByIp(string IP)
 	{
-		string url = "http://api.ipstack.com/" + IP + "?access_key=1be2ededaf9892410b423aad6633bc65";
-		var request = System.Net.WebRequest.Create(url);
-
-		using (WebResponse wrs = request.GetResponse())
-		using (Stream stream = wrs.GetResponseStream())
-		using (StreamReader reader = new StreamReader(stream))
+		try
 		{
-			string jsonString = reader.ReadToEnd();
-			var obj = JsonUtility.FromJson<Root>(jsonString);
-			//var obj = JObject.Parse(json);
-			string City = (string)obj.city;
-			string State = (string)obj.region_name;
-			string Country = (string)obj.country_name;
+			string url = "http://api.ipstack.com/" + IP + "?access_key=1be2ededaf9892410b423aad6633bc65";
+			var request = System.Net.WebRequest.Create(url);
 
-			return (City + " " + State + " " + Country);
+			using (WebResponse wrs = request.GetResponse())
+			using (Stream stream = wrs.GetResponseStream())
+			using (StreamReader reader = new StreamReader(stream))
+			{
+				string jsonString = reader.ReadToEnd();
+
+				//Root obj = JsonUtility.FromJson<Root>(jsonString);
+				Root obj = new Root();
+				Array fields = jsonString.Split(',');
+
+				foreach (string field in fields)
+				{
+					if (field.Contains("country_name"))
+					{
+						obj.country_name = field.Split(':')[1].Trim('"');
+					}
+					else if (field.Contains("region_name"))
+					{
+						obj.region_name = field.Split(':')[1].Trim('"');
+					}
+					else if (field.Contains("\"city\""))
+					{
+						obj.city = field.Split(':')[1].Trim('"');
+					}
+				}
+
+				string City = (string)obj.city;
+				string State = (string)obj.region_name;
+				string Country = (string)obj.country_name;
+
+				string returnString = obj.city + " " + obj.region_name + " " + obj.country_name;
+
+				if (returnString == "  ")
+				{
+					return "Not Sure Where...";
+				}
+				else
+				{
+					return returnString;
+				}
+			}
 		}
-		return "Not Sure Where...";
+		catch
+		{
+			return "Not Sure Where...";
+		}
 	}
 }
 
