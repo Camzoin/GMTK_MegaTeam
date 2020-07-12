@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_bridgecoin02
+  m_Name: Mat_bridgecoinpickup
   m_Shader: {fileID: -6465566751694194690, guid: 3a126a79c9bb15d499e0de8511c26a48,
     type: 3}
   m_ShaderKeywords: 
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_D5A98D67:
-        m_Texture: {fileID: 2800000, guid: b8928bd44735e1842a1135d8b37f3497, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0b992aabbbd5aa344864288144286a08, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
