@@ -128,7 +128,7 @@ public class WordManager : MonoBehaviour
 
     TextMeshProUGUI SpawnWord(string word)
     {
-        Vector3 newPos = new Vector3(Random.Range(-90, 90), Random.Range(0, 50), 90);
+        Vector3 newPos = new Vector3(Random.Range(-60, 90), Random.Range(0, 50), 90);
         if (previousWord != null)
         {
             Rect testRect = new Rect(newPos, previousWord.rectTransform.rect.size);
@@ -136,7 +136,7 @@ public class WordManager : MonoBehaviour
             {
                 if (previousWord.rectTransform.rect.Overlaps(testRect))
                 {
-                    newPos = new Vector3(Random.Range(-90, 90), Random.Range(0, 50), 90);
+                    newPos = new Vector3(Random.Range(-60, 90), Random.Range(0, 50), 90);
                     break;
                 }
             }
