@@ -59,37 +59,42 @@ public class MahjongManager : MonoBehaviour
 
     public void Update()
     {
-        mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
-        Vector3 v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
-
-        if (Input.GetMouseButtonDown(0))
+        try
         {
-            if(Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction), out RaycastHit hitInfo))
+            mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
+            Vector3 v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
+
+            if (Input.GetMouseButtonDown(0))
             {
-                MahjongPiece piece = hitInfo.collider.gameObject.GetComponent<MahjongTile>().mahjongPiece;
-
-                foreach(List<MahjongPiece> l in boardState)
+                if (Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction), out RaycastHit hitInfo))
                 {
-                    if (l.Contains(piece))
+                    MahjongPiece piece = hitInfo.collider.gameObject.GetComponent<MahjongTile>().mahjongPiece;
+
+                    foreach (List<MahjongPiece> l in boardState)
                     {
-                        piece = l[l.Count - 1];
-                        break;
+                        if (l.Contains(piece))
+                        {
+                            piece = l[l.Count - 1];
+                            break;
+                        }
                     }
-                }
 
 
 
-                if (piece != null)
-                {
-                    SelectPiece(piece);
-                    if(lastSelectedPiece != null)
+                    if (piece != null)
                     {
-                        EvaluatePieces(selectedPiece, lastSelectedPiece);
+                        SelectPiece(piece);
+                        if (lastSelectedPiece != null)
+                        {
+                            EvaluatePieces(selectedPiece, lastSelectedPiece);
+                        }
                     }
                 }
             }
+        } catch
+        {
+            Debug.Log("Uh oh, stinky");
         }
-
     }
 
     public void NewGame() //Starts a new game

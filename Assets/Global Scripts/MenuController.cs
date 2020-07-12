@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    public List<Text> usernames;
+    public List<Text> scores;
 
 	public GameObject init1;
 	public GameObject init2;
@@ -145,7 +147,13 @@ public class MenuController : MonoBehaviour
 
 	public void RefreshScores()
 	{
-		GameManager.instance.DownloadScores();
+        GameManager.instance.DownloadScores();
+
+        for (int i = 0; i < 10; i++)
+        {
+            scores[i].text = GameManager.instance.scores[i];
+            usernames[i].text = GameManager.instance.usernames[i];
+        }
 	}
 
 	public void PlayGame()
