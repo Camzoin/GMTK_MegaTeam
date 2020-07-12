@@ -26,10 +26,12 @@ public class JumpKingController : MonoBehaviour
     public UnityEngine.UI.Image fillBar;
     public SpriteRenderer sprite;
     public Vector3 respawnLocation;
+    public float shakeTime = 0f;
 
     bool respawn = false;
     float respawnCharge = 0f;
-    
+    bool lastGroundState = false;
+
     [HideInInspector] public float currentHeldCharge = 0f;
         
     private void OnEnable()
@@ -39,12 +41,14 @@ public class JumpKingController : MonoBehaviour
     }
 
     void Update()
-    {
-        float inputAxis = Input.GetAxis("Horizontal");
+    {float inputAxis = Input.GetAxis("Horizontal");
 
         Collider2D[] cast = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y) + (Vector2.down * 0.75f), new Vector2(0.7f, 0.1f), 0f);
         grounded = cast.Length != 0;
-        
+
+        if (grounded != lastGroundState)
+            shakeTime += 0.05f;
+
         if (inputAxis >= 0.05)
         {
             sprite.flipX = true;
@@ -89,7 +93,15 @@ public class JumpKingController : MonoBehaviour
         animator.SetBool("Grounded", grounded);
         animator.SetInteger("Jump", state);
 
-        cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, transform.position + new Vector3(0, 5, -10), Time.deltaTime * cameraSmoothing);
+        Debug.Log(shakeTime);
+
+        if(shakeTime > 0f)
+        {
+            cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, transform.position + new Vector3(Random.Range(-0.6f, 0.6f), Random.Range(-0.6f, 0.6f), -10), Time.deltaTime * 0.55f);
+            shakeTime -= Time.deltaTime;
+        }
+        else
+            cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, transform.position + new Vector3(0, 5, -10), Time.deltaTime * cameraSmoothing);
 
         fillBar.fillAmount = Mathf.Lerp(fillBar.fillAmount, Mathf.Clamp(Mathf.Clamp(currentHeldCharge * jumpLengthX, 0, maxJumpDistance) / maxJumpDistance, 0, 1), Time.deltaTime * fillBarSmoothing);
 
@@ -109,6 +121,8 @@ public class JumpKingController : MonoBehaviour
             respawnCharge = Mathf.Clamp(respawnCharge - (Time.deltaTime * 1.5f), 0, 1);
             dieVolume.weight = respawnCharge;
         }
+
+        lastGroundState = grounded;
     }
 
     private void OnDrawGizmos()
@@ -121,6 +135,7 @@ public class JumpKingController : MonoBehaviour
         if(!respawn)
         {
             dieSFX.Play();
+            shakeTime += 0.4f;
         }
 
         respawn = true;
