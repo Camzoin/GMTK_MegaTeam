@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3997134545628797732}
   - component: {fileID: 5845579669386220098}
-  - component: {fileID: 463296093606257157}
   - component: {fileID: 95770028538232063}
   - component: {fileID: 4202766835739066701}
   - component: {fileID: 6258004327345535591}
+  - component: {fileID: 3034074658477764111}
   m_Layer: 0
   m_Name: Instruction
   m_TagString: Untagged
@@ -79,14 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!33 &463296093606257157
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4075155336663952262}
-  m_Mesh: {fileID: 0}
 --- !u!222 &95770028538232063
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -227,3 +219,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3034074658477764111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075155336663952262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f289f1dee89257d43b956f64cc605d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3

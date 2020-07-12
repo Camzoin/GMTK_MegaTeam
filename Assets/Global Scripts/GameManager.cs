@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 		pauseMenu = gameObject.transform.GetChild(0).gameObject;
 		pauseMenu.SetActive(false);
 
-		sceneChangerObj = gameObject.transform.GetChild(1).gameObject;
+		sceneChangerObj = gameObject.transform.GetChild(2).gameObject;
 		sc = sceneChangerObj.GetComponent<SceneChanger>();
 	}
 
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
-            StartCoroutine(DelayEnable(popinText, 2, true));
+            StartCoroutine(DelayEnable(popinText, 1.4f, true));
             thisGameStartTime = Time.time;
 		}
 	}
