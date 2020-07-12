@@ -10,14 +10,14 @@ public class MahjongManager : MonoBehaviour
 
     public class MahjongPiece
     {
-        public PieceColor[] pieceColor;
+        public PieceColor[] pieceColors;
         public GameObject piece;
 
         public MahjongPiece(PieceColor[] pieceColor, GameObject piece)
         {
-            this.pieceColor = new PieceColor[2];
-            this.pieceColor[0] = pieceColor[0];
-            this.pieceColor[1] = pieceColor[1];
+            this.pieceColors = new PieceColor[2];
+            this.pieceColors[0] = pieceColor[0];
+            this.pieceColors[1] = pieceColor[1];
             this.piece = piece;
         }
     }
@@ -41,6 +41,10 @@ public class MahjongManager : MonoBehaviour
 
     private Vector3 mPos;
 
+    MahjongPiece selectedPiece, lastSelectedPiece;
+
+    private int pc1, pc2;
+
     public void Start()
     {
         NewGame();
@@ -53,13 +57,29 @@ public class MahjongManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            MahjongPiece piece = FindMahjongPieceOnTop(v, cam.ScreenPointToRay(Input.mousePosition).direction, 100);
-
-            if (piece != null)
+            if(Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction), out RaycastHit hitInfo))
             {
-                var mats = piece.piece.GetComponent<MeshRenderer>().materials;
-                mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
-                mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
+                MahjongPiece piece = hitInfo.collider.gameObject.GetComponent<MahjongTile>().mahjongPiece;
+
+                foreach(List<MahjongPiece> l in boardState)
+                {
+                    if (l.Contains(piece))
+                    {
+                        piece = l[l.Count - 1];
+                        break;
+                    }
+                }
+
+
+
+                if (piece != null)
+                {
+                    SelectPiece(piece);
+                    if(lastSelectedPiece != null)
+                    {
+                        EvaluatePieces(selectedPiece, lastSelectedPiece);
+                    }
+                }
             }
         }
 
@@ -111,18 +131,14 @@ public class MahjongManager : MonoBehaviour
     public void PopulatePieceBuffer() //Instantiates objects into pieceBuffer
     {
         var pieces = new List<MahjongPiece>();
-        int i, j, k;
-        i = j = k = 0;
-        for (; i < totalPieces; i++)
+        for (int i = 0; i < totalPieces; i++)
         {
-            j += k % 4 == 4 ? 1 : 0;
 
-            PieceColor[] pieceColors = { (PieceColor)(j % 4), (PieceColor)(k % 4) };
+            PieceColor[] pieceColors = GenerateNewColors(i);
 
             MahjongPiece tPiece = new MahjongPiece(pieceColors, Instantiate(piecePrefabs[i % 10]));
-
+            tPiece.piece.GetComponent<MahjongTile>().mahjongPiece = tPiece;
             pieces.Add(tPiece);
-
             //TODO Instantiate asynchronsly?
         }
 
@@ -180,61 +196,121 @@ public class MahjongManager : MonoBehaviour
         }
     }
 
-    public bool ScorePiece(int x, int y) //Removes piece and call AddScore
+    public bool ScorePiece(MahjongPiece piece) //Removes piece and call AddScore
     {
-        if (x >= boardSize || y >= boardSize || boardState[x, y].Count <= 0) return false;
-        boardState[x, y].RemoveAt(boardState.Length);
+        foreach (List<MahjongPiece> l in boardState)
+        {
+            if (l.Contains(piece))
+            {
+                l.Remove(piece);
+                Destroy(piece.piece);
+                break;
+            }
+        }
         //TODO Assign points
         return true;
     }
 
-    public MahjongPiece FindMahjongPieceOnTop(Vector3 pos, Vector3 dir, int maxIterations)
+    public MahjongPiece FindMahjongPiece(GameObject gameObject)
     {
-        Ray ray = new Ray(pos, dir);
-        List<MahjongPiece> stack = FindNearestStack(new Vector2(pos.x, pos.z));
-        if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
-        {
-            Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
-
-            return stack[stack.Count - 1];
-        }
-
-        for (int i = 0; i < maxIterations; i++)
-        {
-            ray.origin += dir * 1 / 3;
-
-            stack = FindNearestStack(new Vector2(ray.origin.x, ray.origin.z));
-            if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
-            {
-                Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
-                return stack[stack.Count - 1];
-            }
-        }
-
-        Console.WriteLine("No piece found");
-        return null;
+        return gameObject.GetComponent<MahjongTile>().mahjongPiece;
     }
 
-    public List<MahjongPiece> FindNearestStack(Vector2 pos) //Finds the bottom bottom piece of the nearest stack
+    public void SelectPiece(MahjongPiece piece)
     {
-        List<MahjongPiece> returnStack = boardState[0,0];
-
-        foreach (List<MahjongPiece> l in boardState)
+        if(selectedPiece != null) lastSelectedPiece = selectedPiece;
+        selectedPiece = piece;
+        if(selectedPiece == lastSelectedPiece)
         {
-            if(l.Count <= 0) continue;
-
-            Vector2 currStackPos = new Vector2(l[0].piece.transform.position.x, l[0].piece.transform.position.z);
-
-            Vector2 currStackAdjPos = new Vector2((l[0].piece.transform.position.x + pieceDimensions.x + padding.x) / 2, (l[0].piece.transform.position.z + pieceDimensions.z + padding.z) / 2);
-            Vector2 returnStackAdjPos = new Vector2((returnStack[0].piece.transform.position.x + pieceDimensions.x + padding.x) / 2, (returnStack[0].piece.transform.position.z + pieceDimensions.z + padding.z) / 2);
-
-            //Debug.Log("currStackAdjPos: " + currStackAdjPos + " returnStackAdjPos: " + returnStackAdjPos);
-
-            if (Vector2.Distance(pos, returnStackAdjPos) > Vector2.Distance(pos, currStackAdjPos))
-            {
-                returnStack = l;
-            }
+            ClearSelectBuffer();
+            return;
         }
-        return returnStack;
+        Debug.Log(selectedPiece.pieceColors[0] + " " + selectedPiece.pieceColors[1]);
+        var mats = piece.piece.GetComponent<MeshRenderer>().materials;
+        mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
+        mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
+    }
+
+    public bool EvaluatePieces(MahjongPiece p1, MahjongPiece p2)
+    {
+        if(p1.pieceColors[0] == p2.pieceColors[0] ||
+           p1.pieceColors[0] == p2.pieceColors[1] ||
+           p1.pieceColors[1] == p2.pieceColors[0] ||
+           p1.pieceColors[1] == p2.pieceColors[1])
+        {
+            ScorePiece(p1);
+            ScorePiece(p2);
+            ClearSelectBuffer();
+            return true;
+        }
+        ClearSelectBuffer();
+        return false;
+    }
+
+    public void ClearSelectBuffer()
+    {
+        if(selectedPiece != null)
+        {
+            var mats = selectedPiece.piece.GetComponent<MeshRenderer>().materials;
+            mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 0));
+            mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 0));
+        }
+        if (lastSelectedPiece != null)
+        {
+            var mats = lastSelectedPiece.piece.GetComponent<MeshRenderer>().materials;
+            mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 0));
+            mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 0));
+        }
+        lastSelectedPiece = selectedPiece = null;
+    }
+
+    public PieceColor[] GenerateNewColors(int i)
+    {
+        PieceColor[] colors = new PieceColor[2];
+        switch (i % 10)
+        {
+            case 0:
+                colors[0] = PieceColor.blue;
+                colors[1] = PieceColor.blue;
+                break;
+            case 1:
+                colors[0] = PieceColor.green;
+                colors[1] = PieceColor.blue;
+                break;
+            case 2:
+                colors[0] = PieceColor.green;
+                colors[1] = PieceColor.green;
+                break;
+            case 3:
+                colors[0] = PieceColor.green;
+                colors[1] = PieceColor.red;
+                break;
+            case 4:
+                colors[0] = PieceColor.green;
+                colors[1] = PieceColor.yellow;
+                break;
+            case 5:
+                colors[0] = PieceColor.red;
+                colors[1] = PieceColor.blue;
+                break;
+            case 6:
+                colors[0] = PieceColor.red;
+                colors[1] = PieceColor.red;
+                break;
+            case 7:
+                colors[0] = PieceColor.red;
+                colors[1] = PieceColor.yellow;
+                break;
+            case 8:
+                colors[0] = PieceColor.yellow;
+                colors[1] = PieceColor.blue;
+                break;
+            case 9:
+                colors[0] = PieceColor.yellow;
+                colors[1] = PieceColor.yellow;
+                break;
+        }
+        
+        return colors;
     }
 }

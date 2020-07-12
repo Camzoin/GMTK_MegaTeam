@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6556680576415091377}
   - component: {fileID: 7877316554141189396}
   - component: {fileID: 5383260479851540958}
+  - component: {fileID: 5699964988493589634}
+  - component: {fileID: -6659169637395165484}
   m_Layer: 0
   m_Name: Green Green
   m_TagString: Untagged
@@ -80,3 +82,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5699964988493589634
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887843613644984331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.59999996, y: 0.045999907, z: 0.26000023}
+  m_Center: {x: 0, y: 0.022999953, z: -0.0000001937151}
+--- !u!114 &-6659169637395165484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887843613644984331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a92e133f2f484f8ddc544b7bcf93b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
