@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character 1
+  m_Name: Character 3
   m_Shader: {fileID: -6465566751694194690, guid: 181a05e2165f9c0439763cb32e928dcc,
     type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_D5A98D67:
-        m_Texture: {fileID: 2800000, guid: e1a5711836a8b7d41846934d94306a28, type: 3}
+        m_Texture: {fileID: 2800000, guid: c4a90e25f26d78542a480fb79f193dcf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
