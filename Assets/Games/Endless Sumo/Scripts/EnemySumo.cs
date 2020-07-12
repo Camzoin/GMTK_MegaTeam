@@ -43,6 +43,7 @@ public class EnemySumo : MonoBehaviour
         //smash bros VFX
 
         Instantiate(smashExplosion, transform.position, Quaternion.identity);
+        CameraShake.instance.Shake(0.2f);
 
         Destroy(gameObject);
     }

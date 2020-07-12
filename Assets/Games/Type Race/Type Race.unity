@@ -309,7 +309,7 @@ MonoBehaviour:
   origin: {x: 0, y: 0, z: 0}
   shakeBasedOnOrigin: 0
   magnitude: 15
-  roughness: 15
+  roughness: 10
   maxAngle: 10
   decay: 2
 --- !u!1001 &46512438
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnitude: 2
-  roughness: 10
+  roughness: 5
   maxAngle: 3
   decay: 2
 --- !u!1 &878730307
@@ -1100,7 +1100,7 @@ RectTransform:
   m_GameObject: {fileID: 1734802139}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.11163073, y: 0.11163073, z: 0.11163073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6240447973748073489}
   m_Father: {fileID: 0}
@@ -1514,7 +1514,7 @@ RectTransform:
   m_GameObject: {fileID: 6240447973748073488}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 30}
-  m_LocalScale: {x: 2239.5269, y: 2239.5269, z: 8.958107}
+  m_LocalScale: {x: 300, y: 150, z: 1}
   m_Children: []
   m_Father: {fileID: 1734802143}
   m_RootOrder: 0

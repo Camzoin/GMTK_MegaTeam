@@ -50,6 +50,7 @@ public class PlayerSumo : MonoBehaviour
         //smash bros VFX
 
         Instantiate(smashExplosion, transform.position, Quaternion.identity);
+        CameraShake.instance.Shake(0.2f);
 
         transform.position = spawn.transform.position;
 
