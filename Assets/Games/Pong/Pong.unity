@@ -813,7 +813,7 @@ MonoBehaviour:
   right: {fileID: 1544246145}
   left: {fileID: 627742933}
   moveSpeed: 15
-  maxSpeed: 40
+  maxSpeed: 50
   xBounds: 9.5
 --- !u!58 &1294058649
 CircleCollider2D:

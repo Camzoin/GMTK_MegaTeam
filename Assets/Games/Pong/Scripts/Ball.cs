@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        float angle = Random.Range(30, 60) + Random.Range(0,1) * 180;
+        float angle = Random.Range(30f, 150f) * Random.Range(0, 2) * 180f;
         float radAngle = angle * Mathf.Deg2Rad;
         Vector2 moveVec = new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle));
 
@@ -40,7 +40,9 @@ public class Ball : MonoBehaviour
 
             rb.position = Vector3.zero;
 
-            Vector2 moveVec = Random.insideUnitCircle.normalized;
+            float angle = Random.Range(30f, 150f) * Random.Range(0, 2) * 180f;
+            float radAngle = angle * Mathf.Deg2Rad;
+            Vector2 moveVec = new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle));
 
             rb.velocity = moveVec * moveSpeed;
         }
@@ -50,7 +52,9 @@ public class Ball : MonoBehaviour
 
             rb.position = Vector3.zero;
 
-            Vector2 moveVec = Random.insideUnitCircle.normalized;
+            float angle = Random.Range(30f, 150f) * Random.Range(0, 2) * 180f;
+            float radAngle = angle * Mathf.Deg2Rad;
+            Vector2 moveVec = new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle));
 
             rb.velocity = moveVec * moveSpeed;
 
@@ -62,7 +66,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.collider.CompareTag("Bumper"))
         {
-            rb.AddForce(Random.insideUnitCircle.normalized * 3, ForceMode2D.Impulse);
+            rb.AddForce(Random.insideUnitCircle.normalized * 5, ForceMode2D.Impulse);
         }
         CameraShake.instance.Shake(0.1f);
         Instantiate(bounceEffect, transform.position, Quaternion.identity);
