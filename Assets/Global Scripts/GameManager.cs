@@ -84,8 +84,8 @@ public class GameManager : MonoBehaviour
 	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG };
 
 	private List<games> gamesQueue = new List<games>();
-	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
-	private List<float> gamesDurration = new List<float> { 5, 5, 5, 5, 5, 5 };
+	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	//private List<float> gamesDurration = new List<float> { 5, 5, 5, 5, 5, 5 };
 	private int currentGame = -1;
 
 	private float score = 0f;
@@ -101,27 +101,27 @@ public class GameManager : MonoBehaviour
 	private void OnEnable()
 	{
 		//If we're on the menu scene.
-		if (SceneManager.GetActiveScene().buildIndex == 0)
-		{
-			GameObject startMenu = GameObject.Find("Start Menu");
-			GameObject endMenu = GameObject.Find("End Menu");
+		//if (SceneManager.GetActiveScene().buildIndex == 0)
+		//{
+		//	GameObject startMenu = GameObject.Find("Start Menu");
+		//	GameObject endMenu = GameObject.Find("End Menu");
 
-			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.None;
-			if (gamesQueue.Count == 0)
-			{
-				//Main menu
-				startMenu.SetActive(true);
-				endMenu.SetActive(false);
-			}
-			else
-			{
-				//end screen
-				startMenu.SetActive(false);
-				endMenu.SetActive(true);
-				DownloadScores();
-			}
-		}
+		//	Cursor.visible = true;
+		//	Cursor.lockState = CursorLockMode.None;
+		//	if (gamesQueue.Count == 0)
+		//	{
+		//		//Main menu
+		//		startMenu.SetActive(true);
+		//		endMenu.SetActive(false);
+		//	}
+		//	else
+		//	{
+		//		//end screen
+		//		startMenu.SetActive(false);
+		//		endMenu.SetActive(true);
+		//		DownloadScores();
+		//	}
+		//}
 	}
 
 	private void Awake()
@@ -163,10 +163,20 @@ public class GameManager : MonoBehaviour
 	{
 		if (currentGame > -1)
 		{
-			if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
+			try
 			{
-				NextGame();
+				if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
+				{
+					NextGame();
+				}
 			}
+			catch(Exception e)
+			{
+
+
+				Debug.Log("duration list len: " + gamesDurration.Count + " current game: " + currentGame + " this game start: " + thisGameStartTime + " - e: " + e.ToString());
+			}
+			
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -251,6 +261,8 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Game: " + i + " Name: " + gamesQueue[i].ToString() + " Durration: " + gamesDurration[i].ToString());
 		}
 
+		Debug.Log("durration list: " + gamesDurration.Count + " queue count: " + gamesQueue.Count);
+
 		NextGame();
 	}
 
@@ -258,7 +270,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentGame++;
 
-		if (currentGame == gamesQueue.Count)
+		if (currentGame == gamesQueue.Count - 1)
 		{
 			//if we have finished the game queue go back to the menu
 			//need to implement score screen
