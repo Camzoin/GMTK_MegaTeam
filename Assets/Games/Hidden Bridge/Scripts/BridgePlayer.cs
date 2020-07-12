@@ -102,10 +102,13 @@ public class BridgePlayer : MonoBehaviour
             rb.transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z), transform.up);
 
             range = Mathf.Lerp(range, 6, 5 * Time.deltaTime);
+     
         }
         else
         {
             range = Mathf.Lerp(range, 0, 0.5f * Time.deltaTime);
+
+            
         }
 
         float dist = Vector3.Distance(oldPos, transform.position);
@@ -120,10 +123,12 @@ public class BridgePlayer : MonoBehaviour
         if (rb.velocity != Vector3.zero)
         {           
             isMoving = true;
+            gameObject.GetComponent<AudioSource>().enabled = true;
         }
         else
         {
             isMoving = false;
+            gameObject.GetComponent<AudioSource>().enabled = false;
         }
 
         oldPos = transform.position;
