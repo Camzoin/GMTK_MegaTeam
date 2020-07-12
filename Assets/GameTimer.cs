@@ -20,11 +20,10 @@ public class GameTimer : MonoBehaviour
     {
         //set game count
         gameCount.SetText(GameManager.instance.GetRemainingGames().ToString());
-        GameManager.instance.GetRemainingTime();
 
         int myBlubb = (int)GameManager.instance.GetRemainingTime();
 
         //set game time
-        gameTime.SetText(myBlubb.ToString());
+        gameTime.SetText(myBlubb.ToString().Trim('-'));
     }
 }

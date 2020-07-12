@@ -210,7 +210,8 @@ public class GameManager : MonoBehaviour
 
 	public int GetRemainingGames()
 	{
-		return gamesQueue.Count - (currentGame + 1);
+		int agsdgg = Math.Abs(gamesQueue.Count - (currentGame + 1));
+		return agsdgg;
 	}
 
 	public float GetTotalScore()
