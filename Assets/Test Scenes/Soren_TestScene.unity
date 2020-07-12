@@ -231,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1155909681
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -384,8 +384,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965604812}
-  m_LocalRotation: {x: 0.00045913967, y: 0.99942386, z: -0.0153013, w: 0.030292919}
-  m_LocalPosition: {x: -1.3242048, y: 0.5876973, z: 21.294067}
+  m_LocalRotation: {x: -0.028733864, y: 0.709477, z: -0.028963378, w: -0.7035466}
+  m_LocalPosition: {x: 24.848606, y: 1.7638131, z: 0.2831981}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -437,7 +437,7 @@ PrefabInstance:
     - target: {fileID: 923288989188001504, guid: 2127c35b682ebe34d98e918e161af256,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.69
       objectReference: {fileID: 0}
     - target: {fileID: 923288989188001504, guid: 2127c35b682ebe34d98e918e161af256,
         type: 3}
@@ -492,7 +492,12 @@ PrefabInstance:
     - target: {fileID: 923288989188001505, guid: 2127c35b682ebe34d98e918e161af256,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 923288989521189740, guid: 2127c35b682ebe34d98e918e161af256,
+        type: 3}
+      propertyPath: heightScale
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2127c35b682ebe34d98e918e161af256, type: 3}
@@ -563,6 +568,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guide_Trail_Origin
       objectReference: {fileID: 0}
+    - target: {fileID: 3148854730680737895, guid: c05ffddddddfa014198884e81e094fc0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239150922366905748, guid: c05ffddddddfa014198884e81e094fc0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239150922366905748, guid: c05ffddddddfa014198884e81e094fc0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c05ffddddddfa014198884e81e094fc0, type: 3}
 --- !u!1001 &4517123910020464052
@@ -631,6 +651,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Osu_Burst_OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517123908254787006, guid: 0f2715a1e0b8d144886a0436ed052441,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f2715a1e0b8d144886a0436ed052441, type: 3}

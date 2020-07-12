@@ -93,7 +93,8 @@ public class JumpKingController : MonoBehaviour
         animator.SetBool("Grounded", grounded);
         animator.SetInteger("Jump", state);
 
-        Debug.Log(shakeTime);
+		//Alex did this sorry.
+        //Debug.Log(shakeTime);
 
         if(shakeTime > 0f)
         {
