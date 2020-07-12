@@ -38,7 +38,7 @@ public class SpotLightPlayer : MonoBehaviour
 
         if (isMoving == true)
         {
-            rb.transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
+            rb.transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z), transform.up);
         }
 
         float dist = Vector3.Distance(oldPos, transform.position);
