@@ -55,16 +55,6 @@ public class MahjongManager : MonoBehaviour
         {
             lastMPos = mPos;
             v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
-
-            //Cell cell = FindCell(v, cam.ScreenPointToRay(Input.mousePosition).direction, 100);
-            //if (cell != null)
-            //{
-            //    selector.MoveSelector(new Vector3(cell.pos.x + cellDims / 2, cell.elevation + 1.5f, cell.pos.y + cellDims / 2));
-            //}
-            //else
-            //{
-            //    //Debug.Log("No cell found");
-            //}
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -210,6 +200,8 @@ public class MahjongManager : MonoBehaviour
         List<MahjongPiece> stack = FindNearestStack(new Vector2(pos.x, pos.z));
         if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
         {
+            Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
+
             return stack[stack.Count - 1];
         }
 
@@ -220,6 +212,7 @@ public class MahjongManager : MonoBehaviour
             stack = FindNearestStack(new Vector2(ray.origin.x, ray.origin.z));
             if (stack.Count > 0 && ray.origin.y < stack[stack.Count - 1].piece.transform.position.y)
             {
+                Debug.Log("mpos: " + pos + " stack pos: " + stack[stack.Count - 1].piece.transform.position);
                 return stack[stack.Count - 1];
             }
         }
@@ -232,17 +225,15 @@ public class MahjongManager : MonoBehaviour
     {
         List<MahjongPiece> returnStack = boardState[0,0];
 
-        Vector2 returnStackPos = new Vector2();
-
         foreach (List<MahjongPiece> l in boardState)
         {
             if(l.Count <= 0) continue;
 
             Vector2 currStackPos = new Vector2(l[0].piece.transform.position.x, l[0].piece.transform.position.z);
 
-            //Vector2 currStackAdjPos = new Vector2(currStack[0].piece.transform.position.x + pieceDimensions.x / 2, currStack[0].piece.transform.position.y + pieceDimensions.z / 2);
-            //Vector2 returnPieceAdjPos = new Vector2(returnStack[0].piece.transform.position.x + pieceDimensions.x / 2, returnStack[0].piece.transform.position.y + pieceDimensions.z / 2);
-            if (Vector2.Distance(pos, returnStackPos) > Vector2.Distance(pos, currStackPos))
+            Vector2 currStackAdjPos = new Vector2(l[0].piece.transform.position.x + pieceDimensions.x / 2, l[0].piece.transform.position.z + pieceDimensions.z / 2);
+            Vector2 returnStackAdjPos = new Vector2(returnStack[0].piece.transform.position.x + pieceDimensions.x / 2, returnStack[0].piece.transform.position.z + pieceDimensions.z / 2);
+            if (Vector2.Distance(pos, returnStackAdjPos) > Vector2.Distance(pos, currStackAdjPos))
             {
                 returnStack = l;
             }
