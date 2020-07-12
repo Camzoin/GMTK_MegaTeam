@@ -214,12 +214,22 @@ public class MahjongManager : MonoBehaviour
             }
         }
 
-        //TODO Assign points
-        if (!CheckRemainingMatches())
+        //TODO Uncomment
+        //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 0.5f);
+
+        switch (CheckRemainingMatches())
         {
-            NewGame();
+            case 0:
+                NewGame();
+                break;
+            case 1:
+                return true;
+            case 2:
+                //TODO Uncomment
+                //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 5f);
+                return true;
         }
-        return true;
+        return false;
     }
 
     public MahjongPiece FindMahjongPiece(GameObject gameObject)
@@ -325,10 +335,20 @@ public class MahjongManager : MonoBehaviour
         return colors;
     }
 
-    public bool CheckRemainingMatches()
+    public int CheckRemainingMatches()
     {
         int blue, green, red, yellow;
         blue = green = red = yellow = 0;
+
+        bool boardClear = false;
+
+        foreach(List<MahjongPiece> l in boardState)
+        {
+            boardClear = !(l.Count > 0);
+            if (!boardClear) break;
+        }
+
+        if (boardClear) return 2;
 
         foreach(List<MahjongPiece> l in boardState)
         {
@@ -364,9 +384,9 @@ public class MahjongManager : MonoBehaviour
                     yellow++;
                     break;
             }
-            if (blue > 1 || green > 1 || red > 1 || yellow > 1) return true;
+            if (blue > 1 || green > 1 || red > 1 || yellow > 1) return 1;
         }
-        return false;
+        return 0;
     }
 
     public void ResetBoard()
