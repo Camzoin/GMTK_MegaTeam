@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab))
+			if (Input.GetKeyDown(KeyCode.Tab))
 			{
 				if (!isPause)
 				{
@@ -296,6 +296,8 @@ public class GameManager : MonoBehaviour
 		startTime = Time.time;
 		scoreSubmitted = false;
 
+		gamesQueue = new List<games>();
+
 		//generate game queue
 		for (int i = 0; i < gamesDurration.Count; i++)
 		{
@@ -340,6 +342,8 @@ public class GameManager : MonoBehaviour
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			//SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
+
 			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
 			thisGameStartTime = Time.time;

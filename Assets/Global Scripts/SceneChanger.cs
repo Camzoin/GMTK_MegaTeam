@@ -25,7 +25,7 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         RandomPattern();
 
         fadeMat.SetFloat("Rotation", rotation);
@@ -41,17 +41,20 @@ public class SceneChanger : MonoBehaviour
             size = Mathf.Lerp(size, 1.1f, 2 * Time.deltaTime);
             alpha = Mathf.Lerp(alpha, 1, 5 * Time.deltaTime);
 
-            if(size > 1)
+            if(size >= 1 - float.Epsilon)
             {
                 fadingOut = false;
                 fadingIn = true;
                 SceneManager.LoadScene(nextScene);
+
+
+
             }
         }
 
         if (fadingIn == true)
         {
-            size = Mathf.Lerp(size, -0.1f, 0.5f * Time.deltaTime);
+            size = Mathf.Lerp(size, -0.3f, 0.5f * Time.deltaTime);
             alpha = Mathf.Lerp(alpha, 0, 5 * Time.deltaTime);
 
             if (size < 0)
