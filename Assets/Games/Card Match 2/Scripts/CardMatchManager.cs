@@ -41,8 +41,23 @@ public class CardMatchManager : MonoBehaviour
                 if (card)
                 {
                     SelectCard(card);
-                    StartCoroutine(FlipCard(card, 0.15f));
-                    
+                    StartCoroutine(FlipCard(card, 0f, 0.15f));
+                    if (lastSelectedCard != null) 
+                    {
+                        if (EvaluateCards(selectedCard, lastSelectedCard))
+                        {
+                            ScorePoints(1f);
+                            PopCard(selectedCard);
+                            PopCard(lastSelectedCard);
+                            DeselectCards();
+                        }
+                        else
+                        {
+                            StartCoroutine(FlipCard(selectedCard, 1f, 0.15f));
+                            StartCoroutine(FlipCard(lastSelectedCard, 1f, 0.15f));
+                            DeselectCards();
+                        }
+                    }
                 }
             }
         }
@@ -110,11 +125,13 @@ public class CardMatchManager : MonoBehaviour
         }
     }
 
-    public IEnumerator FlipCard(Card card, float flipDuration)
+    public IEnumerator FlipCard(Card card, float warmup, float flipDuration)
     {
+        for (float i = 0; i < warmup; i += Time.deltaTime) yield return null;
+
         GameObject g = card.gameObject;
-        float yRot = g.transform.rotation.y % 360;
         card.spriteIndex += card.spriteIndex == 0 ? 1 : -1;
+        g.GetComponent<BoxCollider>().enabled = false;
         g.GetComponent<SpriteRenderer>().sprite = card.sprites[card.spriteIndex];
 
         for(float i = 0; i < flipDuration; i += Time.deltaTime)
@@ -122,6 +139,8 @@ public class CardMatchManager : MonoBehaviour
             g.transform.localScale = new Vector3(i / flipDuration, 1, 1);
             yield return null;
         }
+        g.transform.localScale = new Vector3(1, 1, 1);
+        g.GetComponent<BoxCollider>().enabled = true;
     }
 
     public void SelectCard(Card card)
@@ -132,6 +151,33 @@ public class CardMatchManager : MonoBehaviour
 
     public bool EvaluateCards(Card c0, Card c1)
     {
+        if (c0 == c1) return false;
         return c0.cardType == c1.cardType ? true : false;
+    }
+
+    public void ScorePoints(float points)
+    {
+        GameManager.instance.ScorePoints(GameManager.games.CARDFLIP, points);
+    }
+
+    public void PopCard(Card card)
+    {
+        card.GetComponent<BoxCollider>().enabled = false;
+        StartCoroutine(ShrinkCard(card, 0.25f));
+    }
+
+    public IEnumerator ShrinkCard(Card card, float duration)
+    {
+        for(float i = duration; i > 0; i -= Time.deltaTime)
+        {
+            card.transform.localScale = Vector3.one * (i / duration);
+            yield return null;
+        }
+        Destroy(card.gameObject);
+    }
+
+    public void DeselectCards()
+    {
+        lastSelectedCard = selectedCard = null;
     }
 }
