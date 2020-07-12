@@ -22,6 +22,10 @@ public class SpotLightPlayer : MonoBehaviour
 
     Animator anim;
 
+    float scoreTime = 0.2f;
+
+    float gainScoreTime, loseScoreTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,11 +61,23 @@ public class SpotLightPlayer : MonoBehaviour
         //score
         if (isSafe == true)
         {
+            gainScoreTime = gainScoreTime + Time.deltaTime;
             //add
+            if (gainScoreTime > scoreTime)
+            {
+                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, 0.2f);
+                gainScoreTime = 0;
+            }
         }
         else
         {
+            loseScoreTime = loseScoreTime + Time.deltaTime;
             //subtract
+            if (loseScoreTime > scoreTime)
+            {
+                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, -0.2f);
+                loseScoreTime = 0;
+            }
         }
 
         //anim stuff
