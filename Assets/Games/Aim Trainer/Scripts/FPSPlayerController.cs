@@ -52,8 +52,13 @@ namespace UnityTemplateProjects
         public float fireRate = 0.1f;
         public float accuracy = 1f;
 
+        private float cooldownCD = 0f;
+
         public Camera mainCamera;
         public GameObject bulletHole;
+        public Animator animator;
+        public ParticleSystem fireLense;
+        public GameObject fireSound;
 
         void OnEnable()
         {
@@ -76,8 +81,15 @@ namespace UnityTemplateProjects
             //   Cursor.lockState = CursorLockMode.None;
             //}
 
-            if (Input.GetMouseButtonDown(0))
+            cooldownCD -= Time.deltaTime;
+
+            if (Input.GetMouseButtonDown(0) && cooldownCD <= 0f )
             {
+                animator.SetTrigger("FireGun");
+                fireLense.Play();
+                Instantiate(fireSound, transform.position, transform.rotation);
+                cooldownCD = 0.25f;
+
                 RaycastHit hitData = new RaycastHit();
 
                 if(Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitData))
