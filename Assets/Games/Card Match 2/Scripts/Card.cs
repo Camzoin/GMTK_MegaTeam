@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public enum CardType { blueCircle, blueDiamond, blueHeart, blueSquare, blueStar, blueTriangle, greenCircle, greenDiamond, greenHeart, greenSquare, greenStar, greenTriangle, redCircle, redDiamond, redHeart, redSquare, redStar, redTriangle }
+    public enum CardType { blueCircle, greenCircle, pinkCircle,
+                           blueDiamond, greenDiamond, pinkDiamond,
+                           blueHeart, greenHeart, pinkHeart,
+                           blueSquare, greenSquare, pinkSquare,
+                           blueStar, greenStar, pinkStar,
+                           blueTriangle, greenTriangle, pinkTriangle
+                         }
 
     public CardType cardType;
 
     public Sprite[] sprites = new Sprite[2];
+
+    public Card(CardType cardType, Sprite sprite)
+    {
+        this.cardType = cardType;
+        sprites[1] = sprite;
+    }
 }
