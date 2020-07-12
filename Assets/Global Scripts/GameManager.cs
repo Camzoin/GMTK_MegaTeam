@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 	private GameObject pauseMenu;
 	private bool isPause = false;
 
+	public GameObject timer;
+
 	private GameObject sceneChangerObj;
 	private SceneChanger sc;
 
@@ -58,12 +60,12 @@ public class GameManager : MonoBehaviour
 	public Dictionary<games, string> popInText = new Dictionary<games, string>
 	{
 		{ games.LIMBO, "" },
-		{ games.HIDEBRIDGE, "" },
+		{ games.HIDEBRIDGE, "Don't fall!" },
 		{ games.JUMPKING, "Jump!" },
 		{ games.RUNNER, "" },
 		{ games.OVERIT, "" },
 		{ games.DHUNT, "Shoot bird!" },
-		{ games.PONG, "" },
+		{ games.PONG, "Ping!" },
 		{ games.STROOP, "Pick the color of the word!" },
 		{ games.AIMTRAIN, "Shoot!" },
 		{ games.TARGETS, "" },
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab))
+			if (Input.GetKeyDown(KeyCode.Tab))
 			{
 				if (!isPause)
 				{
@@ -199,6 +201,17 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public float GetRemainingTime()
+	{
+		return Time.time - thisGameStartTime - gamesDurration[currentGame];
+	}
+
+	public int GetRemainingGames()
+	{
+		int agsdgg = Math.Abs(gamesQueue.Count - (currentGame + 1));
+		return agsdgg;
 	}
 
 	public float GetTotalScore()
@@ -296,6 +309,8 @@ public class GameManager : MonoBehaviour
 		startTime = Time.time;
 		scoreSubmitted = false;
 
+		gamesQueue = new List<games>();
+
 		//generate game queue
 		for (int i = 0; i < gamesDurration.Count; i++)
 		{
@@ -330,6 +345,7 @@ public class GameManager : MonoBehaviour
 			ShowCorrectMenuStuff();
 			sessionActive = false;
 			needToShowMenuUI = true;
+			timer.SetActive(false);
 		}
 		else
 		{
@@ -340,9 +356,12 @@ public class GameManager : MonoBehaviour
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			//SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
+
 			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
 			thisGameStartTime = Time.time;
+			timer.SetActive(true);
 		}
 	}
 
