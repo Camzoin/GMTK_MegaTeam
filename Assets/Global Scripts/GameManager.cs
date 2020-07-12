@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
 	private GameObject sceneChangerObj;
 	private SceneChanger sc;
 
-    [SerializeField]
-    private GameObject popinText;
+	[SerializeField]
+	private GameObject popinText;
 
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
 	public Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 		{ games.SIMPLE, "" }
 	};
 
-	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG};
+	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG };
 
 	private List<games> gamesQueue = new List<games>();
 	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
 				DownloadScores();
 			}
 		}
-
 	}
 
 	private void Awake()
@@ -155,13 +154,13 @@ public class GameManager : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		//Cursor.visible = false;
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
 		if (currentGame > -1)
 		{
 			if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
@@ -190,7 +189,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-    }
+	}
 
 	public float GetTotalScore()
 	{
@@ -270,8 +269,8 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
-            StartCoroutine(DelayEnable(popinText, 1.4f, true));
-            thisGameStartTime = Time.time;
+			StartCoroutine(DelayEnable(popinText, 1.4f, true));
+			thisGameStartTime = Time.time;
 		}
 	}
 
@@ -298,7 +297,7 @@ public class GameManager : MonoBehaviour
 
 		//Generate string to store list of games played in the session using '|' as the delimiter.
 		string gamesListString = "'";
-		foreach(games gameN in gameList)
+		foreach (games gameN in gameList)
 		{
 			gamesListString += gameN.ToString() + "|";
 		}
@@ -310,7 +309,7 @@ public class GameManager : MonoBehaviour
 		string locString = CityStateCountByIp(externalip);
 
 		string dataString = name + "," + System.DateTime.UtcNow + "," + score.ToString() + "," + gamesListString + "," + locString;
-		
+
 		byte[] fileContents;
 
 		using (var ms = new MemoryStream())
@@ -367,17 +366,17 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-    private IEnumerator DelayEnable(GameObject gameObject, float delay, bool enabled)
-    {
-        float timer = 0;
+	private IEnumerator DelayEnable(GameObject gameObject, float delay, bool enabled)
+	{
+		float timer = 0;
 
-        while (timer < delay)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        gameObject.SetActive(enabled);
-    }
+		while (timer < delay)
+		{
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		gameObject.SetActive(enabled);
+	}
 
 	public static string CityStateCountByIp(string IP)
 	{
