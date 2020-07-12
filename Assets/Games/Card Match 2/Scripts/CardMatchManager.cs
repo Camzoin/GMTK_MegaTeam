@@ -21,21 +21,27 @@ public class CardMatchManager : MonoBehaviour
 
     public void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         NewGame();
     }
     public void Update()
     {
         mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
-        Vector3 v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
+        Vector3 v = new Vector3(mPos.x, mPos.y, mPos.z);
+
+        Debug.DrawRay(v, cam.ScreenPointToRay(Input.mousePosition).direction * 10);
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction), out RaycastHit hitInfo))
+            Debug.Log(mPos + " " + v);
+
+            if (Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction * 10), out RaycastHit hitInfo))
             {
                 Card card = hitInfo.collider.GetComponentInParent<Card>();
                 if (card)
                 {
-                    StartCoroutine(FlipCard(card, 0.25f));
+                    StartCoroutine(FlipCard(card, 0.15f));
                 }
             }
         }
@@ -106,11 +112,13 @@ public class CardMatchManager : MonoBehaviour
     public IEnumerator FlipCard(Card card, float flipDuration)
     {
         GameObject g = card.gameObject;
-        float yRot = g.transform.rotation.y;
+        float yRot = g.transform.rotation.y % 360;
+        card.spriteIndex += card.spriteIndex == 0 ? 1 : -1;
+        g.GetComponent<SpriteRenderer>().sprite = card.sprites[card.spriteIndex];
 
         for(float i = 0; i < flipDuration; i += Time.deltaTime)
         {
-            //g.transform.Rotate(0, Mathf.Lerp(), 0);
+            g.transform.localScale = new Vector3(i / flipDuration, 1, 1);
             yield return null;
         }
     }
