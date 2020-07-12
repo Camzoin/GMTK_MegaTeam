@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
 	private CursorLockMode cursorLockModeBeforePause = CursorLockMode.None;
 	private bool cursorEnableStateBeforePause = true;
 
+	private int scoreScene = 26;
+
+	private string bigName = "";
+
 	private void Awake()
 	{
 		//Make sure this is the only Game Manager
@@ -206,7 +210,15 @@ public class GameManager : MonoBehaviour
 
 	public float GetRemainingTime()
 	{
-		return Time.time - thisGameStartTime - gamesDurration[currentGame];
+		try
+		{
+			return Time.time - thisGameStartTime - gamesDurration[currentGame];
+		}
+		catch
+		{
+			return 0f;
+		}
+		
 	}
 
 	public int GetRemainingGames()
@@ -373,7 +385,7 @@ public class GameManager : MonoBehaviour
 		{
 			scoreSubmitted = true;
 			//Needs to get the name entered and reject if not alphanumeric.
-			UploadScore("TTT", score, gamesQueue);
+			UploadScore(bigName, score, gamesQueue);
 		}
 	}
 
@@ -522,6 +534,12 @@ public class GameManager : MonoBehaviour
 			return "Not Sure Where...";
 		}
 	}
+
+	public void SetName(string name)
+	{
+		bigName = name;
+	}
+
 }
 
 public class Language

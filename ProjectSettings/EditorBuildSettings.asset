@@ -101,4 +101,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Games/IQ test/IQ test.unity
     guid: 01c8d03028744ac4cb5a1f4769f06111
+  - enabled: 1
+    path: Assets/Scoreboard.unity
+    guid: 139cf1b6a1b584a4792327a2b44f5ffe
   m_configObjects: {}
