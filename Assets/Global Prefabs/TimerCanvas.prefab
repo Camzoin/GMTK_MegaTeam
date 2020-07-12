@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 515388591266102140}
   - component: {fileID: 817903727897211770}
-  - component: {fileID: 6873052182580271166}
   - component: {fileID: 8985083977749939499}
   m_Layer: 0
   m_Name: timer_ui
@@ -46,22 +45,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2560560448461521235}
   m_CullTransparentMesh: 0
---- !u!111 &6873052182580271166
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2560560448461521235}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: af10d2710fc48324c8ec24382a4820b2, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: af10d2710fc48324c8ec24382a4820b2, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &8985083977749939499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +184,7 @@ GameObject:
   - component: {fileID: 5810090959197180967}
   - component: {fileID: 5617077400006489902}
   - component: {fileID: 1674474377247354351}
+  - component: {fileID: 3666451756542076919}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -255,6 +239,20 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &3666451756542076919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3929836034197502849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29f364f28573a6419ed1c6ec372784e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTime: {fileID: 2706195580303349785}
+  gameCount: {fileID: 6276777932297805038}
 --- !u!1 &4740157016756538965
 GameObject:
   m_ObjectHideFlags: 0
