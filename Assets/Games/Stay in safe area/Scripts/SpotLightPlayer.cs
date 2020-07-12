@@ -69,7 +69,7 @@ public class SpotLightPlayer : MonoBehaviour
             //add
             if (gainScoreTime > scoreTime)
             {
-                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, 0.2f);
+                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, 0.1f);
                 gainScoreTime = 0;
             }
         }
@@ -79,7 +79,7 @@ public class SpotLightPlayer : MonoBehaviour
             //subtract
             if (loseScoreTime > scoreTime)
             {
-                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, -0.2f);
+                GameManager.instance.ScorePoints(GameManager.games.SPOTLIGHT, -0.05f);
                 loseScoreTime = 0;
             }
         }
