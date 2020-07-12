@@ -23,6 +23,8 @@ public class MoleController : MonoBehaviour
 
 	private bool isPopped = false;
 
+    public Animator anim;
+
 	private string state = "Hole";
 
     // Start is called before the first frame update
@@ -45,8 +47,8 @@ public class MoleController : MonoBehaviour
 		{
 			if (Time.time >= timeOfNextPop)
 			{
-				Pop();
-			}
+				Pop();               
+            }
 		}
     }
 
@@ -66,7 +68,8 @@ public class MoleController : MonoBehaviour
 			//use the mole
 			state = "Mole";
 			mole.SetActive(true);
-		}
+            anim.SetTrigger("PopUp");
+        }
 	}
 
 	private void UnPop()
@@ -77,11 +80,12 @@ public class MoleController : MonoBehaviour
 		timeOfNextPop = Time.time + Random.Range(minTimeBetweenPops, maxTimeBetweenPops);
 
 		state = "Hole";
-		mole.SetActive(false);
+		//mole.SetActive(false);
 		bomb.SetActive(false);
-	}
+        anim.SetTrigger("Burrow");
+    }
 
-	private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.name == "Hammer" && isPopped)
 		{
@@ -111,7 +115,8 @@ public class MoleController : MonoBehaviour
 				//Mole oof
 				UnPop();
 				collision.gameObject.GetComponent<HammerController>().HitAMole();
-			}
+                anim.SetTrigger("Whack");
+            }
 		}
 	}
 }
