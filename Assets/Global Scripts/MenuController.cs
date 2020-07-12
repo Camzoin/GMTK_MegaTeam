@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -32,10 +33,23 @@ public class MenuController : MonoBehaviour
 			}
 			else if (Input.GetKeyDown(KeyCode.S))
 			{
+				Text curObj;
+
 				if (curLetter == 0)
 				{
-
+					curObj = init1.GetComponent<Text>();
 				}
+				else if (curLetter == 1)
+				{
+					curObj = init2.GetComponent<Text>();
+				}
+				else if (curLetter == 2)
+				{
+					curObj = init3.GetComponent<Text>();
+				}
+
+				//int curLetterIndex = index
+
 			}
 			else if (Input.GetKeyDown(KeyCode.D))
 			{

@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
 	private GameObject sceneChangerObj;
 	private SceneChanger sc;
 
-	[SerializeField]
-	private GameObject popinText;
+	public GameObject popinText;
 
 	[SerializeField]
 	private TextMeshProUGUI globalScoreText;
@@ -144,7 +143,8 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		ShowCorrectMenuStuff();
+		needToShowMenuUI = true;
+		//ShowCorrectMenuStuff();
 		AudioListener.volume = 0.5f;
 	}
 
@@ -265,9 +265,11 @@ public class GameManager : MonoBehaviour
 
 	public void ShowCorrectMenuStuff()
 	{
+		Debug.Log("fsdgsshgs");
 		//If we're on the menu scene.
 		if (SceneManager.GetActiveScene().buildIndex == 0)
 		{
+			Debug.Log("Here");
 			GameObject startMenu = GameObject.Find("StartMenu");
 			GameObject endMenu = GameObject.Find("EndMenu");
 
