@@ -214,8 +214,7 @@ public class MahjongManager : MonoBehaviour
             }
         }
 
-        //TODO Uncomment
-        //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 0.5f);
+        GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 0.5f);
 
         switch (CheckRemainingMatches())
         {
@@ -225,8 +224,7 @@ public class MahjongManager : MonoBehaviour
             case 1:
                 return true;
             case 2:
-                //TODO Uncomment
-                //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 5f);
+                GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 5f);
                 return true;
         }
         return false;
