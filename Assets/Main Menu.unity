@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 412491016}
   - component: {fileID: 412491015}
   m_Layer: 5
-  m_Name: End Menu
+  m_Name: EndMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,12 +577,12 @@ GameObject:
   - component: {fileID: 698437449}
   - component: {fileID: 698437448}
   m_Layer: 5
-  m_Name: Start Menu
+  m_Name: StartMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &698437448
 MonoBehaviour:
   m_ObjectHideFlags: 0
