@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -87,6 +88,8 @@ public class MahjongManager : MonoBehaviour
 
     public void NewGame() //Starts a new game
     {
+        ClearSelectBuffer();
+        ResetBoard();
         int[,] rawGameState = LoadBoardState(files[UnityEngine.Random.Range(0, files.Count)].text);
         PopulatePieceBuffer();
         boardState = new List<MahjongPiece>[boardSize, boardSize];
@@ -206,12 +209,27 @@ public class MahjongManager : MonoBehaviour
             if (l.Contains(piece))
             {
                 l.Remove(piece);
-                Destroy(piece.piece);
+                StartCoroutine(PopPiece(piece, 0.7f));
                 break;
             }
         }
-        //TODO Assign points
-        return true;
+
+        //TODO Uncomment
+        //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 0.5f);
+
+        switch (CheckRemainingMatches())
+        {
+            case 0:
+                NewGame();
+                break;
+            case 1:
+                return true;
+            case 2:
+                //TODO Uncomment
+                //GameManager.instance.ScorePoints(GameManager.games.MAHJONG, 5f);
+                return true;
+        }
+        return false;
     }
 
     public MahjongPiece FindMahjongPiece(GameObject gameObject)
@@ -228,7 +246,7 @@ public class MahjongManager : MonoBehaviour
             ClearSelectBuffer();
             return;
         }
-        Debug.Log(selectedPiece.pieceColors[0] + " " + selectedPiece.pieceColors[1]);
+        //Debug.Log(selectedPiece.pieceColors[0] + " " + selectedPiece.pieceColors[1]);
         var mats = piece.piece.GetComponent<MeshRenderer>().materials;
         mats[0].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
         mats[1].SetColor("_FresnelColor", new Color(0, 1, 0, 1));
@@ -315,5 +333,85 @@ public class MahjongManager : MonoBehaviour
         }
         
         return colors;
+    }
+
+    public int CheckRemainingMatches()
+    {
+        int blue, green, red, yellow;
+        blue = green = red = yellow = 0;
+
+        bool boardClear = false;
+
+        foreach(List<MahjongPiece> l in boardState)
+        {
+            boardClear = !(l.Count > 0);
+            if (!boardClear) break;
+        }
+
+        if (boardClear) return 2;
+
+        foreach(List<MahjongPiece> l in boardState)
+        {
+            if (l.Count <= 0) continue;
+            switch(l[l.Count - 1].pieceColors[0])
+            {
+                case PieceColor.blue:
+                    blue++;
+                    break;
+                case PieceColor.green:
+                    green++;
+                    break;
+                case PieceColor.red:
+                    red++;
+                    break;
+                case PieceColor.yellow:
+                    yellow++;
+                    break;
+            }
+            if (l[l.Count - 1].pieceColors[0] == l[l.Count - 1].pieceColors[1]) continue;
+            switch (l[l.Count - 1].pieceColors[1])
+            {
+                case PieceColor.blue:
+                    blue++;
+                    break;
+                case PieceColor.green:
+                    green++;
+                    break;
+                case PieceColor.red:
+                    red++;
+                    break;
+                case PieceColor.yellow:
+                    yellow++;
+                    break;
+            }
+            if (blue > 1 || green > 1 || red > 1 || yellow > 1) return 1;
+        }
+        return 0;
+    }
+
+    public void ResetBoard()
+    {
+        if (boardState != null)
+        {
+            foreach (List<MahjongPiece> l in boardState)
+            {
+                foreach (MahjongPiece p in l)
+                {
+                    Destroy(p.piece);
+                }
+                l.Clear();
+            }
+        }
+    }
+
+    public IEnumerator PopPiece(MahjongPiece piece, float timeToDestroy)
+    {
+        piece.piece.GetComponent<Animator>().SetTrigger("pop");
+        piece.piece.GetComponent<Collider>().enabled = false;
+        for(float t = 0; t < timeToDestroy; t+= Time.deltaTime)
+        {
+            yield return null;
+        }
+        Destroy(piece.piece);
     }
 }
