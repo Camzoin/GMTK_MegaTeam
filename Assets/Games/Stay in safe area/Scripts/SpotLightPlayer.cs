@@ -14,51 +14,71 @@ public class SpotLightPlayer : MonoBehaviour
 
     Vector3 realMovement;
 
+    bool isSafe = true;
+
+    bool isMoving = false;
+
+    Vector3 oldPos;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
         x = forward.transform.right * Input.GetAxisRaw("Horizontal");
-        z = forward.transform.forward * Input.GetAxisRaw("Vertical");       
+        z = forward.transform.forward * Input.GetAxisRaw("Vertical");
+
+        if (isMoving == true)
+        {
+            rb.transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
+        }
+
+        float dist = Vector3.Distance(oldPos, transform.position);
+
+        if (dist > 0.1f)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        oldPos = transform.position;
+
+        //score
+        if (isSafe == true)
+        {
+            //add
+        }
+        else
+        {
+            //subtract
+        }
+
+        //anim stuff
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            //left?
-            transform.rotation = Quaternion.Lerp(transform.rotation, forward.transform.rotation, Time.deltaTime);
-        
-        }
-        else if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            //right?
-            transform.rotation = Quaternion.Lerp(transform.rotation, forward.transform.rotation, Time.deltaTime);
-        }
-
-        if (Input.GetAxisRaw("Vertical") > 0)
-        {
-            //up
-            transform.rotation = Quaternion.Lerp(transform.rotation, forward.transform.rotation, Time.deltaTime);
-        }
-        else if (Input.GetAxisRaw("Vertical") > 0)
-        {
-            //down
-            transform.rotation = Quaternion.Lerp(transform.rotation, forward.transform.rotation, Time.deltaTime);
-        }
-
-
         Vector3 movement = (x + z) * playerSpeed;
 
         realMovement = Vector3.Lerp(realMovement, movement, 10 * Time.deltaTime);
 
         rb.velocity = realMovement;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        isSafe = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        isSafe = false;
     }
 }

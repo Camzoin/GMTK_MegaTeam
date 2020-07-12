@@ -84,8 +84,8 @@ public class GameManager : MonoBehaviour
 	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG };
 
 	private List<games> gamesQueue = new List<games>();
-	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
-	//private List<float> gamesDurration = new List<float> { 5, 5, 5, 5, 5, 5 };
+	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	private List<float> gamesDurration = new List<float> { 10, 10, 10, 10, 10 };
 	private int currentGame = -1;
 
 	private float score = 0f;
@@ -95,34 +95,11 @@ public class GameManager : MonoBehaviour
 
 	private bool scoreSubmitted = false;
 
+	private bool sessionActive = false;
 	private float startTime;
 	private float thisGameStartTime;
 
-	private void OnEnable()
-	{
-		//If we're on the menu scene.
-		//if (SceneManager.GetActiveScene().buildIndex == 0)
-		//{
-		//	GameObject startMenu = GameObject.Find("Start Menu");
-		//	GameObject endMenu = GameObject.Find("End Menu");
-
-		//	Cursor.visible = true;
-		//	Cursor.lockState = CursorLockMode.None;
-		//	if (gamesQueue.Count == 0)
-		//	{
-		//		//Main menu
-		//		startMenu.SetActive(true);
-		//		endMenu.SetActive(false);
-		//	}
-		//	else
-		//	{
-		//		//end screen
-		//		startMenu.SetActive(false);
-		//		endMenu.SetActive(true);
-		//		DownloadScores();
-		//	}
-		//}
-	}
+	private bool needToShowMenuUI = false;
 
 	private void Awake()
 	{
@@ -155,50 +132,51 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		//Cursor.visible = false;
+		ShowCorrectMenuStuff();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (currentGame > -1)
+		if (sessionActive)
 		{
-			try
+			if (currentGame > -1)
 			{
+
 				if (Time.time >= thisGameStartTime + gamesDurration[currentGame])
 				{
 					NextGame();
 				}
 			}
-			catch(Exception e)
+
+			if (Input.GetKeyDown(KeyCode.Escape))
 			{
+				if (!isPause)
+				{
+					//Pause Menu Needs:
+					//Abandon Run - Back to menu
+					//Exit - Close Game
+					//Volume - Mute/Unmute & Slider
+					//Display Score
+					isPause = true;
+					pauseMenu.SetActive(true);
 
-
-				Debug.Log("duration list len: " + gamesDurration.Count + " current game: " + currentGame + " this game start: " + thisGameStartTime + " - e: " + e.ToString());
+				}
+				else
+				{
+					isPause = false;
+					pauseMenu.SetActive(false);
+				}
 			}
-			
 		}
-
-		if (Input.GetKeyDown(KeyCode.Escape))
+		else
 		{
-			if (!isPause)
+			if (needToShowMenuUI)
 			{
-				//Pause Menu Needs:
-				//Abandon Run - Back to menu
-				//Exit - Close Game
-				//Volume - Mute/Unmute & Slider
-				//Display Score
-				isPause = true;
-				pauseMenu.SetActive(true);
-
-			}
-			else
-			{
-				isPause = false;
-				pauseMenu.SetActive(false);
+				ShowCorrectMenuStuff();
+				needToShowMenuUI = false;
 			}
 		}
-
 	}
 
 	public float GetTotalScore()
@@ -237,8 +215,37 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
 	}
 
+	public void ShowCorrectMenuStuff()
+	{
+		//If we're on the menu scene.
+		if (SceneManager.GetActiveScene().buildIndex == 0)
+		{
+			GameObject startMenu = GameObject.Find("StartMenu");
+			GameObject endMenu = GameObject.Find("EndMenu");
+
+			Debug.Log(endMenu.name);
+
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+			if (gamesQueue.Count == 0)
+			{
+				//Main menu
+				startMenu.SetActive(true);
+				endMenu.SetActive(false);
+			}
+			else
+			{
+				//end screen
+				startMenu.SetActive(false);
+				endMenu.SetActive(true);
+				DownloadScores();
+			}
+		}
+	}
+
 	public void StartNewSession()
 	{
+		sessionActive = true;
 		currentGame = -1;
 		score = 0f;
 		scorePerGame = new Dictionary<games, float>();
@@ -252,10 +259,10 @@ public class GameManager : MonoBehaviour
 			games nextGame = workingGames[UnityEngine.Random.Range(0, workingGames.Count)];
 
 			//make sure we don't get the same game twice in a row.
-			//while (i > 0 && nextGame == gamesQueue[i - 1])
-			//{
-			//	nextGame = workingGames[Random.Range(0, workingGames.Count)];
-			//}
+			while (i > 0 && nextGame == gamesQueue[i - 1])
+			{
+				nextGame = workingGames[UnityEngine.Random.Range(0, workingGames.Count)];
+			}
 
 			gamesQueue.Add(nextGame);
 			Debug.Log("Game: " + i + " Name: " + gamesQueue[i].ToString() + " Durration: " + gamesDurration[i].ToString());
@@ -270,16 +277,22 @@ public class GameManager : MonoBehaviour
 	{
 		currentGame++;
 
-		if (currentGame == gamesQueue.Count - 1)
+		if (currentGame == gamesQueue.Count)
 		{
 			//if we have finished the game queue go back to the menu
 			//need to implement score screen
-
 			//End the game go to menu.
 			sc.ChangeScene(0);
+			ShowCorrectMenuStuff();
+			sessionActive = false;
+			needToShowMenuUI = true;
 		}
 		else
 		{
+			Debug.Log("current game: " + currentGame);
+			Debug.Log("current game: " + gamesQueue[currentGame]);
+			Debug.Log("Game scene num: " + gameSceneNumbers[gamesQueue[currentGame]]);
+
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
 			thisGameStartTime = Time.time;
@@ -351,7 +364,6 @@ public class GameManager : MonoBehaviour
 	{
 		WebClient request = new WebClient();
 		string url = "http://35.163.108.180/ScoreBoard.csv";
-		//request.Credentials = new NetworkCredential("anonymous", "anonymous@example.com");
 
 		try
 		{
