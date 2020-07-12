@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private GameObject popinText;
 
+	[SerializeField]
+	private TextMeshProUGUI globalScoreText;
+
 	public enum games { LIMBO, HIDEBRIDGE, JUMPKING, RUNNER, OVERIT, DHUNT, PONG, STROOP, AIMTRAIN, TARGETS, TANGLE, TREADMILL, WELL, CARDFLIP, UNDERTREE, MAHJONG, PACMAN, COOKIE, SPOTLIGHT, TYPERACE, SUMO, OSU, TOILET, WHACKAMOLE, SIMPLE };
 	public Dictionary<games, int> gameSceneNumbers = new Dictionary<games, int>
 	{
@@ -56,25 +59,25 @@ public class GameManager : MonoBehaviour
 	{
 		{ games.LIMBO, "" },
 		{ games.HIDEBRIDGE, "" },
-		{ games.JUMPKING, "" },
+		{ games.JUMPKING, "Jump!" },
 		{ games.RUNNER, "" },
 		{ games.OVERIT, "" },
 		{ games.DHUNT, "Shoot bird!" },
 		{ games.PONG, "" },
-		{ games.STROOP, "" },
-		{ games.AIMTRAIN, "" },
+		{ games.STROOP, "Pick the color of the word!" },
+		{ games.AIMTRAIN, "Shoot!" },
 		{ games.TARGETS, "" },
 		{ games.TANGLE, "" },
 		{ games.TREADMILL, "" },
 		{ games.WELL, "Get water!" },
 		{ games.CARDFLIP, "Match two!" },
-		{ games.UNDERTREE, "" },
-		{ games.MAHJONG, "" },
+		{ games.UNDERTREE, "Catch fruit!" },
+		{ games.MAHJONG, "Match!" },
 		{ games.PACMAN, "" },
-		{ games.COOKIE, "" },
-		{ games.SPOTLIGHT, "" },
+		{ games.COOKIE, "Click!" },
+		{ games.SPOTLIGHT, "Stay in the light!" },
 		{ games.TYPERACE, "Type!" },
-		{ games.SUMO, "" },
+		{ games.SUMO, "Don't fall!" },
 		{ games.OSU, "Click the circles!" },
 		{ games.TOILET, "Unroll!" },
 		{ games.WHACKAMOLE, "Move hammer smash mole!" },
@@ -84,8 +87,8 @@ public class GameManager : MonoBehaviour
 	private List<games> workingGames = new List<games> { games.SUMO, games.WHACKAMOLE, games.JUMPKING, games.AIMTRAIN, games.TYPERACE, games.TOILET, games.STROOP, games.MAHJONG };
 
 	private List<games> gamesQueue = new List<games>();
-	//private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
-	private List<float> gamesDurration = new List<float> { 10, 10, 10, 10, 10 };
+	private List<float> gamesDurration = new List<float> { 30, 30, 28, 28, 26, 25, 23, 20, 18, 16, 15, 14, 13, 12, 10, 10, 9, 8, 7, 6, 5, 5 };
+	//private List<float> gamesDurration = new List<float> { 10, 10, 10, 10, 10 };
 	private int currentGame = -1;
 
 	private float score = 0f;
@@ -160,7 +163,7 @@ public class GameManager : MonoBehaviour
 					//Display Score
 					isPause = true;
 					pauseMenu.SetActive(true);
-
+					globalScoreText.text = "" + score;
 				}
 				else
 				{
@@ -171,10 +174,15 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			if (needToShowMenuUI)
+			if (needToShowMenuUI && SceneManager.GetActiveScene().buildIndex == 0)
 			{
 				ShowCorrectMenuStuff();
 				needToShowMenuUI = false;
+				if (isPause)
+				{
+					isPause = false;
+					pauseMenu.SetActive(false);
+				}
 			}
 		}
 	}
@@ -243,6 +251,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public void Quit()
+	{
+		Application.Quit();
+	}
+
+	public void AbandonRun()
+	{
+		sessionActive = false;
+		needToShowMenuUI = true;
+		gamesQueue = new List<games>();
+		sc.ChangeScene(0);
+	}
+
 	public void StartNewSession()
 	{
 		sessionActive = true;
@@ -293,7 +314,10 @@ public class GameManager : MonoBehaviour
 			Debug.Log("current game: " + gamesQueue[currentGame]);
 			Debug.Log("Game scene num: " + gameSceneNumbers[gamesQueue[currentGame]]);
 
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
 			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
 			thisGameStartTime = Time.time;
 		}
