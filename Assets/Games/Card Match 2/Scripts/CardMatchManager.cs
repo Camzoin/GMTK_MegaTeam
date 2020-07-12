@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CardMatchManager : MonoBehaviour
 {
     public Vector2 cardDims, padding, originCardPos;
+
+    public Camera cam;
 
     public GameObject cardPrefab;
 
@@ -14,9 +17,28 @@ public class CardMatchManager : MonoBehaviour
 
     private List<Card> deckBuffer = new List<Card>();
 
+    private Vector3 mPos;
+
     public void Start()
     {
         NewGame();
+    }
+    public void Update()
+    {
+        mPos = cam.ScreenPointToRay(Input.mousePosition).origin;
+        Vector3 v = new Vector3(mPos.x, cam.transform.position.y, mPos.z);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(new Ray(v, cam.ScreenPointToRay(Input.mousePosition).direction), out RaycastHit hitInfo))
+            {
+                Card card = hitInfo.collider.GetComponentInParent<Card>();
+                if (card)
+                {
+                    StartCoroutine(FlipCard(card, 0.25f));
+                }
+            }
+        }
     }
 
     public void NewGame()
@@ -78,6 +100,18 @@ public class CardMatchManager : MonoBehaviour
             {
                 cards[i, j].transform.position = new Vector2(originCardPos.x + ((cardDims.x + padding.x) * i), originCardPos.y + ((cardDims.y + padding.y) * j));
             }
+        }
+    }
+
+    public IEnumerator FlipCard(Card card, float flipDuration)
+    {
+        GameObject g = card.gameObject;
+        float yRot = g.transform.rotation.y;
+
+        for(float i = 0; i < flipDuration; i += Time.deltaTime)
+        {
+            //g.transform.Rotate(0, Mathf.Lerp(), 0);
+            yield return null;
         }
     }
 }

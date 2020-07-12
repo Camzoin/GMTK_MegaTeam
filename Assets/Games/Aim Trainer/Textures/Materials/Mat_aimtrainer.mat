@@ -27,14 +27,14 @@ Material:
     m_Floats:
     - AlbedoSaturation: 1
     - AlbedoValue: 1
-    - LightingSaturation: 1
-    - Vector1_20F29EF0: 0.5
+    - LightingSaturation: 0.818
+    - Vector1_20F29EF0: 0.21
     - Vector1_302E9A62: 1
     - Vector1_3568D2C7: 1
-    - Vector1_3821E93C: 2
+    - Vector1_3821E93C: 1.46
     - Vector1_7F2B146D: 1
     - Vector1_812D5644: 15
-    - Vector1_B453BC69: -0.75
+    - Vector1_B453BC69: -0.41
     - Vector1_CCC1DFD8: 0
     - Vector1_FA2D153D: 0.5
     m_Colors:

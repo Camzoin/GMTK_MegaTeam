@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5267868488180055010}
   - component: {fileID: 7998337082753994536}
   - component: {fileID: -5339411733462904545}
+  - component: {fileID: 1283919219957213005}
   m_Layer: 0
   m_Name: Prefab_wam_mole
   m_TagString: Untagged
@@ -99,3 +100,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1283919219957213005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502568785697140477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fadae4b78939e94c9268add03acc42e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
