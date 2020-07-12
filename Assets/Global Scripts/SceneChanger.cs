@@ -43,6 +43,7 @@ public class SceneChanger : MonoBehaviour
 
             if(size >= 1 - float.Epsilon)
             {
+                size = 1f;
                 fadingOut = false;
                 fadingIn = true;
                 SceneManager.LoadScene(nextScene);
@@ -54,9 +55,9 @@ public class SceneChanger : MonoBehaviour
             size = Mathf.Lerp(size, -0.3f, 0.5f * Time.deltaTime);
             alpha = Mathf.Lerp(alpha, 0, 5 * Time.deltaTime);
 
-            if (size < 0)
+            if (size < 0 + float.Epsilon)
             {
-                size = 0;
+                size = 0f;
                 fadingIn = false;
             }
         }

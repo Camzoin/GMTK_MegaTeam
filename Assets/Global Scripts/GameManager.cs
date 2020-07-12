@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		ShowCorrectMenuStuff();
+		AudioListener.volume = 0.5f;
 	}
 
 	// Update is called once per frame
@@ -355,8 +356,8 @@ public class GameManager : MonoBehaviour
 
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
-			sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
-			//SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			//sc.ChangeScene(gameSceneNumbers[gamesQueue[currentGame]]);
+			SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
 
 			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
 			StartCoroutine(DelayEnable(popinText, 1.4f, true));
