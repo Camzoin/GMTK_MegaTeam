@@ -374,7 +374,7 @@ public class GameManager : MonoBehaviour
 			SceneManager.LoadScene(gameSceneNumbers[gamesQueue[currentGame]]);
 
 			popinText.GetComponent<TextMeshProUGUI>().text = popInText[gamesQueue[currentGame]];
-			StartCoroutine(DelayEnable(popinText, 1.4f, true));
+			StartCoroutine(DelayEnable(popinText, 1f, true));
 			thisGameStartTime = Time.time;
 			timer.SetActive(true);
 		}
