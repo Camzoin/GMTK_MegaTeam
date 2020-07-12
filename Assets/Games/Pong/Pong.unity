@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c844f02fa9a5d240b60c9e45c1d473b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+  moveSpeed: 12
   yBounds: 4
 --- !u!61 &920407150
 BoxCollider2D:
