@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -180,7 +184,7 @@ public class GameManager : MonoBehaviour
 		for (int i = 0; i < gamesDurration.Count; i++)
 		{
 			//pick a random game in the working list
-			games nextGame = workingGames[Random.Range(0, workingGames.Count)];
+			games nextGame = workingGames[UnityEngine.Random.Range(0, workingGames.Count)];
 
 			//make sure we don't get the same game twice in a row.
 			//while (i > 0 && nextGame == gamesQueue[i - 1])
@@ -215,9 +219,59 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//private void UploadScore(string name, float score, List<games> gameList)
 	private void UploadScore()
 	{
+		string name = "AXZ";
+		float score = 320541f;
+		List<games> gameList = new List<games> { games.WHACKAMOLE, games.TOILET, games.TARGETS};
 
+		string uniqueID = name + UnityEngine.Random.Range((int)0, (int)10000) + "-" + UnityEngine.Random.Range((int)0, (int)10000);
+
+		//Get the object used to communicate with the server.
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://35.163.108.180/" + uniqueID + ".csv");
+		request.Method = WebRequestMethods.Ftp.UploadFile;
+
+		request.Credentials = new NetworkCredential("GMTKGameClientUser", "BlazeIt420");
+
+		//Generate string to store list of games played in the session using '|' as the delimiter.
+		string gamesListString = "'";
+		foreach(games gameN in gameList)
+		{
+			gamesListString += gameN.ToString() + "|";
+		}
+		gamesListString = gamesListString.TrimEnd('|');
+		gamesListString += "'";
+
+		//Generate location string.
+		string externalip = new WebClient().DownloadString("http://icanhazip.com");
+		string locString = CityStateCountByIp(externalip);
+
+		string dataString = name + "," + System.DateTime.UtcNow + "," + score.ToString() + "," + gamesListString + "," + locString;
+		
+		byte[] fileContents;
+
+		using (var ms = new MemoryStream())
+		{
+			TextWriter tw = new StreamWriter(ms);
+			tw.Write("player_name,time_stamp,score,games,location\n\n");
+			tw.Write(dataString);
+			tw.Flush();
+			ms.Position = 0;
+			fileContents = ms.ToArray();
+		}
+
+		request.ContentLength = fileContents.Length;
+
+		using (Stream requestStream = request.GetRequestStream())
+		{
+			requestStream.Write(fileContents, 0, fileContents.Length);
+		}
+
+		using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+		{
+			Debug.Log("Upload File Complete, status " + response.StatusDescription);
+		}
 	}
 
 	private void DownloadScores()
@@ -236,4 +290,63 @@ public class GameManager : MonoBehaviour
         }
         gameObject.SetActive(enabled);
     }
+
+	public static string CityStateCountByIp(string IP)
+	{
+		string url = "http://api.ipstack.com/" + IP + "?access_key=1be2ededaf9892410b423aad6633bc65";
+		var request = System.Net.WebRequest.Create(url);
+
+		using (WebResponse wrs = request.GetResponse())
+		using (Stream stream = wrs.GetResponseStream())
+		using (StreamReader reader = new StreamReader(stream))
+		{
+			string jsonString = reader.ReadToEnd();
+			var obj = JsonUtility.FromJson<Root>(jsonString);
+			//var obj = JObject.Parse(json);
+			string City = (string)obj.city;
+			string State = (string)obj.region_name;
+			string Country = (string)obj.country_name;
+
+			return (City + " " + State + " " + Country);
+		}
+		return "Not Sure Where...";
+	}
+}
+
+public class Language
+{
+	public string code { get; set; }
+	public string name { get; set; }
+	public string native { get; set; }
+
+}
+
+public class Location
+{
+	public int geoname_id { get; set; }
+	public string capital { get; set; }
+	public List<Language> languages { get; set; }
+	public string country_flag { get; set; }
+	public string country_flag_emoji { get; set; }
+	public string country_flag_emoji_unicode { get; set; }
+	public string calling_code { get; set; }
+	public bool is_eu { get; set; }
+
+}
+
+public class Root
+{
+	public string ip { get; set; }
+	public string type { get; set; }
+	public string continent_code { get; set; }
+	public string continent_name { get; set; }
+	public string country_code { get; set; }
+	public string country_name { get; set; }
+	public string region_code { get; set; }
+	public string region_name { get; set; }
+	public string city { get; set; }
+	public string zip { get; set; }
+	public double latitude { get; set; }
+	public double longitude { get; set; }
+	public Location location { get; set; }
 }
