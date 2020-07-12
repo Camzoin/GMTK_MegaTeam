@@ -139,6 +139,7 @@ public class CardMatchManager : MonoBehaviour
             g.transform.localScale = new Vector3(i / flipDuration, 1, 1);
             yield return null;
         }
+        g.transform.localScale = new Vector3(1, 1, 1);
         g.GetComponent<BoxCollider>().enabled = true;
     }
 
